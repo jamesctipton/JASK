@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, Stack, TextInput, Button, StyleSheet } from "@react-native-material/core";
 import GlobeLogo from "../assets/GlobeLogo";
 import { AntDesign } from '@expo/vector-icons';
-
 import SelectDropdown from 'react-native-select-dropdown'
-import { Home3 } from "./Home3";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Animated } from "react-native";
 import { Easing } from "react-native";
@@ -39,17 +37,20 @@ export const Home2 = ({ state, handleChange }) => {
     ).start();
 
     let model_data = new Array()
-
-    const getData = async () => {
-        try {
-            const jsonValue = await AsyncStorage.getItem('@make')
-            console.log("json",jsonValue)
-            return jsonValue;
-        } catch(e) {
-            console.log(e)
-        }
-    }
-    console.log('test', getData())
+    const [makeValue, setMake] = useState("")
+    useEffect(() => {
+        const firstLoad = async () => {
+            try {
+                const savedMake = await AsyncStorage.getItem("@make");
+                setMake(savedMake);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        firstLoad();
+    }, []);
+    
+    console.log("GOT ITEM", makeValue)
    
     fetch(url + '/model', {
         method: 'POST',
@@ -58,7 +59,7 @@ export const Home2 = ({ state, handleChange }) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            make: getData()
+            make: makeValue
         })
     }).then((response) => 
         response.json()).then((json) => {

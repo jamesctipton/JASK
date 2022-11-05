@@ -19,7 +19,7 @@ class CarModelHandler(SessionMixin, RequestHandler):
     async def post(self):
         data = json.loads(self.request.body)
         make = data['make']
-        print(make)
+        print("server", make)
 
         df_cars = pd.read_csv('vehicles.csv', low_memory=False)
         df_cars = df_cars[['comb08', 'fuelType1', 'make', 'model', 'year']]
