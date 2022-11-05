@@ -1,18 +1,43 @@
 from tornado.web import RequestHandler
 from tornado_sqlalchemy import SessionMixin, as_future
 from models import Car, Trip
-from car_api import makes_array
+from car_api import get_makes, get_models
+import json
+
+make = ""
+model = ""
 
 class CarMakeHandler(SessionMixin, RequestHandler):
     def get(self):
-        self.write({
-            "makes" : [
-                {{makes_array}}
-            ]
-        })
+        makes_array = get_makes()
+        self.write(
+            json.dumps(makes_array)
+        )
+    async def post(self):
+        if not make:
+            error_response = {
+                'resultStatus': 'FAILURE', 
+                'message': 'Car make not provided.'
+            }
+            self.write(error_response)
+        make = self.get_argument("make")
+
+class CarModelHandler(SessionMixin, RequestHandler):
+    def get(self):
+        models_array = get_models(make)
+        
+        self.write(
+            json.dumps(models_array)
+        )
     async def post(self):
         with self.make_session() as session:
-            return
+            if not make:
+                error_response = {
+                    'resultStatus': 'FAILURE', 
+                    'message': 'Car model not provided.'
+                }
+            self.write(error_response)
+        model = self.get_argument("model")
 
 class CarTypeHandler(SessionMixin, RequestHandler):
     def get(self):
