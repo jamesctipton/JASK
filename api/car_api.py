@@ -1,8 +1,6 @@
 import requests
 import pandas as pd
 
-#API_KEY = 'BhKrBC3dXdlTwHAsvUoR3w==BM28AgqyWcnfAKVu'
-
 df_cars = pd.DataFrame()
 df_model_and_year = pd.DataFrame()
 
@@ -13,15 +11,6 @@ def get_makes():
     return makes_array
 
 def get_models(make):
-    """ api_url = 'https://api.api-ninjas.com/v1/cars?make={}'.format(make)
-    response = requests.get(api_url, headers={'X-Api-Key': API_KEY})
-    if response.status_code == requests.codes.ok:
-        df_cars = pd.read_json(response.text)
-        models_array = df_cars['model'].to_list()
-        models_array = list(set(models_array))
-        return models_array, df_cars
-    else:
-        print("Error:", response.status_code, response.text) """
     df_cars = pd.read_csv('vehicles.csv')
     df_cars = df_cars[['comb08', 'fuelType1', 'make', 'model', 'year']]
     df_cars = df_cars.loc[df_cars['make'] == make]
@@ -30,9 +19,9 @@ def get_models(make):
     map(str, models_array)
     return models_array, df_cars
 
-models_array, df_cars = get_models('Toyota')
+""" models_array, df_cars = get_models('Toyota')
 print(df_cars)
-
+ """
 
 def get_years(model, df_cars):
     df_model = df_cars.loc[df_cars['model'] == model]

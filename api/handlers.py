@@ -35,7 +35,6 @@ class CarYearHandler(SessionMixin, RequestHandler):
 
         years_array, df_model = get_years(model, df_cars)
         self.write(json.dumps(years_array))
-            
 
 class CarFullHandler(SessionMixin, RequestHandler):
     async def post(self):
@@ -56,11 +55,12 @@ class TripHandler(SessionMixin, RequestHandler):
         })
     async def post(self):
         with self.make_session() as session:
-            tripname = self.get_argument("tripname")
-            distance = self.get_argument("distance") # miles 
-            gasUsed = self.get_argument("gasUsed") # gallons
-            emissions = self.get_argument("emissions") # tons 
-            gasCost = self.get_argument("gasCost")
+            data = json.loads(self.request.body)
+            tripname = data["tripname"]
+            distance = data["distance"] 
+            gasUsed = data["gasUsed"]# gallons
+            emissions = data["emissions"] # tons 
+            gasCost = data["gasCost"] # in dollars
 
             trip = Trip(tripname = tripname, distance = distance, gasUsed = gasUsed,
                         emissions = emissions, gasCost = gasCost)
