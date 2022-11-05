@@ -66,6 +66,7 @@ export const Home2 = ({ state, handleChange }) => {
             for (let index = 0; index < json.length; index++) {
                 model_data.push(json[index])
             }
+            console.log(model_data)
         })
         .catch((error) => {
             console.log(error)
