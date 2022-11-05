@@ -41,10 +41,7 @@ export const Home = ({ state, handleChange }) => {
     })
 
     const handleSubmit = () => {
-        return fetch(url, {
-            method: 'POST',
-            body: {'test': 'test'}
-        })
+        return fetch(url)
         .then((response) => response.json())
         .then((json) => {
             console.log(json)
