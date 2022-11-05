@@ -22,21 +22,22 @@ export default function App() {
     getLocation();
   }, []);
 
+  let text;
+
   const getLocation = () => {
     (async () => {
-      
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-
+      // text = 'Waiting...';
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
   }
 
-  let text = 'Waiting..';
+  text = 'Waiting...';
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -55,7 +56,8 @@ export default function App() {
       <View style={styles.container}>
         <Button 
           title="Refresh"
-          onPress={getLocation()}
+          onPress={getLocation()} // refreshes every
+          // onPress={() => getLocation()} // only on click
         />
         <Text style={styles.paragraph}>{text}</Text>
       </View>
