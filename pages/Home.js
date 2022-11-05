@@ -55,15 +55,35 @@ export const Home = ({ state, handleChange }) => {
     });
 
     const fetchModels = (car_make) => {
-        console.log(car_make)
+        car_data.make = car_make
         fetch(url + '/model', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*', 
                 'Content-Type': 'application/json'
-              },
+            },
             body: JSON.stringify({make: car_make})
          }).then((response) => 
+            response.json()).then((json) => {
+                console.log(json)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const fetchYears = (car_make, car_model) => {
+        fetch(url + '/year', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*', 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                make: care_make,
+                model: car_model
+            })
+        }).then((response) => 
             response.json()).then((json) => {
                 console.log(json)
             })
@@ -90,7 +110,6 @@ export const Home = ({ state, handleChange }) => {
                 dropdownIconPosition={"right"}
                 buttonTextStyle={{ marginLeft: 20 }}
                 onSelect={(selectedItem, index) => {
-                    car_data.make = selectedItem
                     fetchModels(selectedItem)
                 }}
                 
