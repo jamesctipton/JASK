@@ -37,7 +37,7 @@ def get_mpg(year, df_model):
     return mpg
 
 
-df_cars = get_models('Toyota')
-df_model = get_years('corolla', df_cars)
-get_mpg(1993, df_model)
+# df_cars = get_models('Toyota')
+# df_model = get_years('corolla', df_cars)
+# get_mpg(1993, df_model)
 #print(get_mpg('1993', df_model))
