@@ -29,7 +29,7 @@ export default function App() {
           <Button title="Start Trip" variant='outlined' color='black' trailing={<AntDesign name="car" size={30} color="black" />} onPress={() => setScreen(<TripHome />)}/> }
         trailing={
           <HStack spacing={10}>
-            <IconButton icon={<AntDesign name="database" size={34} color="black" />} onPress={() => setScreen(<History state={screen} handleChange={setScreen} />)} />
+            <IconButton icon={<AntDesign name="database" size={34} color="black" />} onPress={() => setScreen(<History />)} />
             <IconButton icon={<AntDesign name="team" size={38} color="black" />} onPress={() => setScreen(<Friends />)}/>  
             <IconButton icon={<AntDesign name="user" size={38} color="black" />} onPress={() => setScreen(<Home />)} /> 
           </HStack> 
