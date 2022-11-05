@@ -3,7 +3,7 @@ import pandas as pd
 def get_makes():
     with open('car_makes.txt') as f:
         makes_array = [make.rstrip() for make in f]
-    f.close()
+        f.close()
     return makes_array
 
 def get_models(make, df_cars):

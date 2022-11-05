@@ -7,6 +7,7 @@ import json
 make = ""
 model = ""
 year = ""
+df = pd.DataFrame()
 df_cars = pd.DataFrame()
 df_model = pd.DataFrame()
 
@@ -23,7 +24,7 @@ class CarModelHandler(SessionMixin, RequestHandler):
         make = data['make']
         print(make)
 
-        models_array, df_cars = get_models(make, df_cars)
+        models_array, df_cars = get_models(make, df)
         print(models_array)
         self.write(json.dumps(models_array))
         
@@ -33,7 +34,7 @@ class CarYearHandler(SessionMixin, RequestHandler):
         data = json.loads(self.request.body)
         model = data['model']
 
-        years_array, df_model = get_years(model, df_cars, df_model)
+        years_array, df_model = get_years(model, df_cars, df)
         self.write(json.dumps(years_array))
 
 class CarFullHandler(SessionMixin, RequestHandler):
