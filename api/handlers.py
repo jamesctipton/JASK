@@ -3,6 +3,7 @@ from tornado_sqlalchemy import SessionMixin, as_future
 from models import Car, Trip
 from car_api import *
 import json
+from models import db
 
 make = ""
 model = ""
@@ -50,8 +51,8 @@ class CarFullHandler(SessionMixin, RequestHandler):
             mpg, fueltype = get_mpg_fueltype(int(year), model)
 
             car = Car(make = make, model = model, year = year, fueltype = fueltype, mpg = mpg)
-            await as_future(session.add(car))
-            await as_future(session.commit())
+            await as_future(db.session.add(car))
+            await as_future(db.session.commit())
         self.write({
             'response': 'SUCCESS'
         })
@@ -73,5 +74,5 @@ class TripHandler(SessionMixin, RequestHandler):
 
             trip = Trip(tripname = tripname, distance = distance, gasUsed = gasUsed,
                         emissions = emissions, gasCost = gasCost)
-            await as_future(session.add(trip))
-            await as_future(session.commit())
+            await as_future(db.session.add(trip))
+            await as_future(db.session.commit())
