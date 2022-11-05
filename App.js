@@ -8,6 +8,7 @@ import {
   Button,
   AppBar,
   IconButton,
+  Spacer,
 } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import * as Location from 'expo-location';
@@ -39,8 +40,7 @@ export default function App() {
   }
 
   return (
-    <View>
-      <Text style={styles.paragraph}>{text}</Text>
+    <View style={{flex: 1}}>
       <AppBar 
         variant='bottom'
         color='#4caf50'
@@ -55,7 +55,10 @@ export default function App() {
           />
         )}
         style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 75, justifyContent: "center" }}>
-      </AppBar> 
+      </AppBar>
+      <View style={styles.container}>
+        <Text style={styles.paragraph}>{text}</Text>
+      </View>
     </View>
   );
 }
