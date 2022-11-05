@@ -1,2 +1,0 @@
-# JASK
-tigerhacks emissions app
