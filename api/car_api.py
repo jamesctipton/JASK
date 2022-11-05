@@ -22,7 +22,7 @@ def get_models(make):
     return models_array
 
 models_array = get_models("Cadillac")
-print(models_array)
+#print(models_array)
 """ models_array, df_cars = get_models('Toyota')
 print(df_cars)
  """
@@ -34,7 +34,7 @@ def get_years(model):
     df_model = df_cars.loc[df_cars['model'] == model]
     years_array = df_model['year'].to_list()
     years_array = list(set(years_array))
-    map(int, years_array)
+    map(str, years_array)
     return years_array
 
 """ years_array, df_model = get_years('4Runner 4WD', df_cars)

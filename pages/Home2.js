@@ -6,6 +6,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Animated } from "react-native";
 import { Easing } from "react-native";
+import { Home3 } from "./Home3";
 
 
 
@@ -50,11 +51,18 @@ export const Home2 = ({ state, handleChange }) => {
         firstLoad();
     }, []);
     
+    const setModel = async (car_model) => {
+        try {
+            const jsonValue = JSON.stringify(car_model)
+            await AsyncStorage.setItem('@model', jsonValue)
+        } catch (e) {
+            console.log(e)
+        }
+    }
     
    
     if(makeValue.length != 0)
     {
-        console.log("GOT ITEM", makeValue)
         fetch(url + '/model', {
             method: 'POST',
             headers: {
@@ -62,22 +70,18 @@ export const Home2 = ({ state, handleChange }) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                make: makeValue
+                make: makeValue.replace(/['"]+/g, '')
             })
         }).then((response) => 
             response.json()).then((json) => {
                 for (let index = 0; index < json.length; index++) {
                     model_data.push(json[index])
                 }
-                console.log(model_data)
             })
             .catch((error) => {
                 console.log(error)
             }) 
     }
-    
- 
-    
 
     return (
         <Stack style={{ alignItems: 'center', marginTop: -75}} spacing={20} >
@@ -96,13 +100,13 @@ export const Home2 = ({ state, handleChange }) => {
                 dropdownIconPosition={"right"}
                 buttonTextStyle={{ marginLeft: 20 }}
                 onSelect={(selectedItem, index) => {
-                    setMake(selectedItem)
+                    setModel(selectedItem)
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem;
                 }}
             />
-            <Button title="Next" variant="contained" color="#4caf50" width={150} onPress={() => handleChange(<Home2 state={state} handleChange={handleChange} />)} />
+            <Button title="Next" variant="contained" color="#4caf50" width={150} onPress={() => handleChange(<Home3 state={state} handleChange={handleChange} />)} />
         </Stack>
     )
 }

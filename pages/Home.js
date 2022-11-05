@@ -56,7 +56,7 @@ export const Home = ({ state, handleChange }) => {
             await AsyncStorage.setItem('@make', jsonValue)
             
         } catch (e) {
-            console.log(error)
+            console.log(e)
         }
     }
 
