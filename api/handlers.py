@@ -14,6 +14,7 @@ class CarMakeHandler(SessionMixin, RequestHandler):
         self.write(
             json.dumps(makes_array)
         )
+<<<<<<< HEAD
 
 class CarModelHandler(SessionMixin, RequestHandler):
     async def post(self):
@@ -43,6 +44,34 @@ class CarYearHandler(SessionMixin, RequestHandler):
                 return
             mpg, fueltype = get_mpg_fueltype(int(year))
             car = Car(make = make, model = model, year = year, fueltype = fueltype, mpg = mpg)
+=======
+
+class CarModelHandler(SessionMixin, RequestHandler):
+    async def post(self):
+        data = json.loads(self.request.body)
+        make = data['make']
+        print(make)
+
+        models_array = get_models(make)
+        print(models_array)
+        self.write(json.dumps(models_array))
+        
+
+class CarTypeHandler(SessionMixin, RequestHandler):
+    def get(self):
+        self.write({
+            'resultStatus': 'SUCCESS',
+            'message': "hit car type handler"
+        })
+    async def post(self):
+        with self.make_session() as session:
+            make = self.get_argument("make")
+            model = self.get_argument("model")
+            fueltype = self.get_argument("fueltype")
+            mpg = self.get_argument("mpg")
+
+            car = Car(make = make, model = model, fueltype = fueltype, mpg = mpg)
+>>>>>>> dd854df29780c81d490bf94a51f2f7a2333e7576
             await as_future(session.add(car))
             await as_future(session.commit())
             self.write({

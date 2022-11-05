@@ -26,6 +26,7 @@ def get_models(make):
 models_array, df_cars = get_models('Toyota')
 
 def get_years(model, df_cars):
+<<<<<<< HEAD
     df_model_and_year = df_cars.groupby(by=["model"]).mean()
     #df_model_and_year= df_model_and_year.loc[df_cars['model'] == model]
     year_array = df_model_and_year['year'].to_list()
@@ -51,3 +52,21 @@ mpg, fueltype = get_mpg_fueltype(1993, df_model_and_year)
 print("MPG" + mpg)
 print("Fuel type" + fueltype)
 '''
+=======
+    df_model = df_cars.loc[df_cars['model'] == model]
+    df_model.groupby(by=["year"]).mean()
+    return df_model
+
+def get_mpg(year, df_model):
+    df = df_model.loc[df_cars['year'] == year]
+    #print(df)
+    mpg = df['combination_mpg'].iloc[0]
+    #print(mpg)
+    return mpg
+
+
+# df_cars = get_models('Toyota')
+# df_model = get_years('corolla', df_cars)
+# get_mpg(1993, df_model)
+#print(get_mpg('1993', df_model))
+>>>>>>> dd854df29780c81d490bf94a51f2f7a2333e7576
