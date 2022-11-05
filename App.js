@@ -19,6 +19,10 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
+    getLocation();
+  }, []);
+
+  const getLocation = () => {
     (async () => {
       
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -30,7 +34,7 @@ export default function App() {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
-  }, []);
+  }
 
   let text = 'Waiting..';
   if (errorMsg) {
