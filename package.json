@@ -22,7 +22,8 @@
     "react-native-screens": "~3.15.0",
     "react-native-select-dropdown": "^3.0.1",
     "react-native-maps": "0.31.1",
-    "react-native-svg": "12.3.0"
+    "react-native-svg": "12.3.0",
+    "expo-task-manager": "~10.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
