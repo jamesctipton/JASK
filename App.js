@@ -53,6 +53,10 @@ export default function App() {
         style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 75, justifyContent: "center", padding: 15 }}>
       </AppBar>
       <View style={styles.container}>
+        <Button 
+          title="Refresh"
+          onPress={getLocation()}
+        />
         <Text style={styles.paragraph}>{text}</Text>
       </View>
     </View>
