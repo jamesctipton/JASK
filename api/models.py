@@ -9,6 +9,7 @@ class Car(db.Model):
     id = Column(Integer, primary_key=True, unique=True)
     make = Column(String(128))
     model = Column(String(128))
+    year = Column(Integer)
     fueltype = Column(String(64))
     mpg = Column(Numeric(precision=10, scale=2)) # miles per gallon 
 
