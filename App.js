@@ -1,13 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import GetLocation from 'react-native-get-location';
+import React from 'react';
+import { 
+  StyleSheet, 
+  View,
+} from 'react-native';
+import { 
+  Button,
+  AppBar,
+  IconButton,
+} from "@react-native-material/core";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+
+
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <AppBar 
+        variant='bottom'
+        leading={props => (
+          <IconButton icon={props => <Icon name="menu" {...props} />} {...props} />
+        )}
+        trailing={props => (
+          <IconButton
+            icon={props => <Icon name="magnify" {...props} />}
+            {...props}
+          />
+        )}
+        style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 75, justifyContent: "center" }}>
+
+      </AppBar>    
   );
 }
 
@@ -15,8 +36,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#d3ffb9',
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
