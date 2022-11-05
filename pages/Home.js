@@ -5,7 +5,7 @@ import GlobeLogo from "../assets/GlobeLogo";
 import { Animated } from "react-native";
 import { Easing } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
-
+import axios from 'axios'
 
 const dropdownStyle = {
     width: '80%',
@@ -16,6 +16,7 @@ const dropdownStyle = {
     borderRadius: 8,
     borderColor: '#444',
 }
+const url = "http://localhost:8888/car"
 
 export const Home = ({ state, handleChange }) => {
 
@@ -39,6 +40,26 @@ export const Home = ({ state, handleChange }) => {
         model: "",
         year: 0,
     })
+
+    /* const handleSubmit = (event) => {
+        event.preventDefault()
+        axios.get(url).then((response) => {
+          console.log(response)
+        }).catch((error) => {
+          console.log(error)
+        })
+    }; */
+    const handleSubmit = () => {
+        return fetch(url)
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json)
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    };
+
     return (
         <Stack style={{ alignItems: 'center', marginTop: -75}} spacing={20} >
             <Animated.View style={{transform: [{rotate: rotation}] }} >
@@ -79,7 +100,7 @@ export const Home = ({ state, handleChange }) => {
                 buttonTextStyle={{ marginLeft: 20 }}
                 onSelect={(e) => setCarSpecs({...carSpecs, year: e.target.value})}
             />
-            <Button title="Submit" variant="contained" color="#4caf50" width={150} onPress={() => {}} />
+            <Button title="Submit" variant="contained" color="#4caf50" width={150} onPress={handleSubmit} />
         </Stack>
     )  
 }
