@@ -1,5 +1,8 @@
 import pandas as pd
 
+df_cars = pd.DataFrame()
+df_model = pd.DataFrame()
+
 def get_makes():
     with open('car_makes.txt') as f:
         makes_array = [make.rstrip() for make in f]
