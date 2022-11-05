@@ -1,9 +1,22 @@
-import React from "react";
-import { Text, Stack, TextInput, Button } from "@react-native-material/core";
+import React, { useState } from "react";
+import { Text, Stack, TextInput, Button, StyleSheet } from "@react-native-material/core";
 import SelectDropdown from 'react-native-select-dropdown'
 import GlobeLogo from "../assets/GlobeLogo";
 import { Animated } from "react-native";
 import { Easing } from "react-native";
+import { AntDesign } from '@expo/vector-icons';
+
+
+const dropdownStyle = {
+    
+    width: '80%',
+    height: 50,
+    backgroundColor: '#FFF',
+    paddingHorizontal: 0,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: '#444',
+}
 
 export const Home = ({ state, handleChange }) => {
 
@@ -22,6 +35,11 @@ export const Home = ({ state, handleChange }) => {
             useNativeDriver: true })
     ).start();
 
+    const [carSpecs, setCarSpecs] = useState({
+        make: "",
+        model: "",
+        year: 0,
+    })
     return (
         <Stack style={{ alignItems: 'center', marginTop: -75}} spacing={20} >
             <Animated.View style={{transform: [{rotate: rotation}] }} >
@@ -31,18 +49,38 @@ export const Home = ({ state, handleChange }) => {
             <Text variant="h7">Please enter your cars make, model, and year</Text>
             <SelectDropdown 
                 buttonStyle={{ borderRadius: 15, borderWidth: 2, borderColor: '#4caf50', width: '80%', marginBottom: 20}}
-                defaultButtonText="Please select your cars make"
+                dropdownStyle={dropdownStyle}
+                defaultButtonText="Make"
+                renderDropdownIcon={isOpened => {
+                    return <AntDesign name={isOpened ? "up" : "down"} size={18} color="black" />
+                }}
+                dropdownIconPosition={"right"}
+                buttonTextStyle={{ marginLeft: 20 }}
+                onSelect={(e) => setCarSpecs({...carSpecs, make: e.target.value})}
             />
             <SelectDropdown 
                 buttonStyle={{ borderRadius: 15, borderWidth: 2, borderColor: '#4caf50', width: '80%', marginBottom: 20}}
-                defaultButtonText="Please select the model"
+                dropdownStyle={dropdownStyle}
+                defaultButtonText="Model"
+                renderDropdownIcon={isOpened => {
+                    return <AntDesign name={isOpened ? "up" : "down"} size={18} color="black" />
+                }}
+                dropdownIconPosition={"right"}
+                buttonTextStyle={{ marginLeft: 20 }}
+                onSelect={(e) => setCarSpecs({...carSpecs, model: e.target.value})}
             />
             <SelectDropdown 
                 buttonStyle={{ borderRadius: 15, borderWidth: 2, borderColor: '#4caf50', width: '80%', marginBottom: 20}}
-                defaultButtonText="Please select the year"
+                dropdownStyle={dropdownStyle}
+                defaultButtonText="Year"
+                renderDropdownIcon={isOpened => {
+                    return <AntDesign name={isOpened ? "up" : "down"} size={18} color="black" />
+                }}
+                dropdownIconPosition={"right"}
+                buttonTextStyle={{ marginLeft: 20 }}
+                onSelect={(e) => setCarSpecs({...carSpecs, year: e.target.value})}
             />
             <Button title="Submit" variant="contained" color="#4caf50" width={150} onPress={() => {}} />
         </Stack>
-    )
-    
+    )  
 }
