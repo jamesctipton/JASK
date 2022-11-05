@@ -17,6 +17,8 @@ export default function App() {
   return (
       <AppBar 
         variant='bottom'
+        color='#4caf50'
+        title='E-Mission'
         leading={props => (
           <IconButton icon={props => <Icon name="menu" {...props} />} {...props} />
         )}
@@ -27,8 +29,7 @@ export default function App() {
           />
         )}
         style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 75, justifyContent: "center" }}>
-
-      </AppBar>    
+      </AppBar>  
   );
 }
 
