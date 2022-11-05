@@ -34,6 +34,7 @@ class CarYearHandler(SessionMixin, RequestHandler):
         model = data['model']
 
         years_array, df_model = get_years(model, df_cars)
+        print(years_array)
         self.write(json.dumps(years_array))
 
 class CarFullHandler(SessionMixin, RequestHandler):

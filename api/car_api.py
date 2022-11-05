@@ -22,6 +22,8 @@ def get_models(make):
 """ models_array, df_cars = get_models('Toyota')
 print(df_cars)
  """
+#models_array, df_cars = get_models('Toyota')
+#print(models_array)
 
 def get_years(model, df_cars):
     df_model = df_cars.loc[df_cars['model'] == model]
