@@ -23,7 +23,7 @@ class CarModelHandler(SessionMixin, RequestHandler):
         make = data['make']
         print(make)
 
-        models_array, df_cars = get_models(make)
+        models_array, df_cars = get_models(make, df_cars)
         print(models_array)
         self.write(json.dumps(models_array))
         
@@ -33,7 +33,7 @@ class CarYearHandler(SessionMixin, RequestHandler):
         data = json.loads(self.request.body)
         model = data['model']
 
-        years_array, df_model = get_years(model, df_cars)
+        years_array, df_model = get_years(model, df_cars, df_model)
         self.write(json.dumps(years_array))
 
 class CarFullHandler(SessionMixin, RequestHandler):
@@ -41,7 +41,7 @@ class CarFullHandler(SessionMixin, RequestHandler):
         with self.make_session() as session:
             data = json.loads(self.request.body)
             year = data['year']
-            mpg, fueltype = get_mpg_fueltype(int(year), df_model)
+            mpg, fueltype = get_mpg_fueltype(int(year), df_cars, df_model)
 
             car = Car(make = make, model = model, year = year, fueltype = fueltype, mpg = mpg)
             await as_future(session.add(car))

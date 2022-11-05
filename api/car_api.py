@@ -1,8 +1,4 @@
-import requests
 import pandas as pd
-
-df_cars = pd.DataFrame()
-df_model_and_year = pd.DataFrame()
 
 def get_makes():
     with open('car_makes.txt') as f:
@@ -10,7 +6,7 @@ def get_makes():
     f.close()
     return makes_array
 
-def get_models(make):
+def get_models(make, df_cars):
     df_cars = pd.read_csv('vehicles.csv')
     df_cars = df_cars[['comb08', 'fuelType1', 'make', 'model', 'year']]
     df_cars = df_cars.loc[df_cars['make'] == make]
@@ -23,7 +19,7 @@ def get_models(make):
 print(df_cars)
  """
 
-def get_years(model, df_cars):
+def get_years(model, df_cars, df_model):
     df_model = df_cars.loc[df_cars['model'] == model]
     years_array = df_model['year'].to_list()
     years_array = list(set(years_array))
@@ -33,7 +29,7 @@ def get_years(model, df_cars):
 """ years_array, df_model = get_years('4Runner 4WD', df_cars)
 print(years_array)  """
 
-def get_mpg_fueltype(year, df_model):
+def get_mpg_fueltype(year, df_cars, df_model):
     df_unique_year = df_model.loc[df_cars['year'] == year]
     df_unique_year.groupby('year').mean()
     mpg = df_unique_year['comb08'].iloc[0]
