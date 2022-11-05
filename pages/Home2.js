@@ -50,27 +50,32 @@ export const Home2 = ({ state, handleChange }) => {
         firstLoad();
     }, []);
     
-    console.log("GOT ITEM", makeValue)
+    
    
-    fetch(url + '/model', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json, text/plain, */*', 
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            make: makeValue
-        })
-    }).then((response) => 
-        response.json()).then((json) => {
-            for (let index = 0; index < json.length; index++) {
-                model_data.push(json[index])
-            }
-            console.log(model_data)
-        })
-        .catch((error) => {
-            console.log(error)
-        }) 
+    if(makeValue.length != 0)
+    {
+        console.log("GOT ITEM", makeValue)
+        fetch(url + '/model', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*', 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                make: makeValue
+            })
+        }).then((response) => 
+            response.json()).then((json) => {
+                for (let index = 0; index < json.length; index++) {
+                    model_data.push(json[index])
+                }
+                console.log(model_data)
+            })
+            .catch((error) => {
+                console.log(error)
+            }) 
+    }
+    
  
     
 
