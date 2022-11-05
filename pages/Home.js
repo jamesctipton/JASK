@@ -8,7 +8,6 @@ import { AntDesign } from '@expo/vector-icons';
 
 
 const dropdownStyle = {
-    
     width: '80%',
     height: 50,
     backgroundColor: '#FFF',
