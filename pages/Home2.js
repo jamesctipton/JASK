@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Text, Stack, TextInput, Button, StyleSheet } from "@react-native-material/core";
-import SelectDropdown from 'react-native-select-dropdown'
 import GlobeLogo from "../assets/GlobeLogo";
+import { AntDesign } from '@expo/vector-icons';
+
+import SelectDropdown from 'react-native-select-dropdown'
+import { Home3 } from "./Home3";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Animated } from "react-native";
 import { Easing } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
-import { Home2 } from "./Home2";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Home3 } from "./Home3";
+
 
 
 const dropdownStyle = {
@@ -21,7 +22,7 @@ const dropdownStyle = {
 }
 const url = "http://10.7.69.231:8888/car"
 
-export const Home = ({ state, handleChange }) => {
+export const Home2 = ({ state, handleChange }) => {
 
     const animation = new Animated.Value(0);
     const rotation = animation.interpolate({
@@ -37,42 +38,50 @@ export const Home = ({ state, handleChange }) => {
             useNativeDriver: true })
     ).start();
 
+    let model_data = new Array()
 
-    let make_data = new Array()
-
-    fetch(url + '/make').then((response) => 
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('@make')
+            return jsonValue != null ? jsonValue : null;
+        } catch(e) {
+            console.log(e)
+        }
+    }
+    const make_value = getData()
+   
+    fetch(url + '/model', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*', 
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            make: make_value
+        })
+    }).then((response) => 
         response.json()).then((json) => {
             for (let index = 0; index < json.length; index++) {
-                make_data.push(json[index])
+                model_data.push(json[index])
             }
         })
         .catch((error) => {
-            console.log(error);
-    });
-
-    const setMake = async (car_make) => {
-        console.log(car_make)
-        try {
-            const jsonValue = JSON.stringify(car_make)
-            await AsyncStorage.setItem('@make', jsonValue)
-            
-        } catch (e) {
             console.log(error)
-        }
-    }
+        }) 
+ 
+    
 
     return (
         <Stack style={{ alignItems: 'center', marginTop: -75}} spacing={20} >
             <Animated.View style={{transform: [{rotate: rotation}] }} >
                 <GlobeLogo />
             </Animated.View>
-            <Text variant="h4" style={{ marginTop: 30 }}>Welcome to E-Mission!</Text>
-            <Text variant="h7">Please enter your cars make, model, and year</Text>
+            <Text variant="h4" style={{ marginTop: 30 , textAlign: 'center'}}>Please enter your cars model now</Text>
             <SelectDropdown 
-                data={make_data}
+                data={model_data}
                 buttonStyle={{ borderRadius: 15, borderWidth: 2, borderColor: '#4caf50', width: '80%', marginBottom: 20}}
                 dropdownStyle={dropdownStyle}
-                defaultButtonText="Make"
+                defaultButtonText="Model"
                 renderDropdownIcon={isOpened => {
                     return <AntDesign name={isOpened ? "up" : "down"} size={18} color="black" />
                 }}
@@ -87,5 +96,5 @@ export const Home = ({ state, handleChange }) => {
             />
             <Button title="Next" variant="contained" color="#4caf50" width={150} onPress={() => handleChange(<Home2 state={state} handleChange={handleChange} />)} />
         </Stack>
-    )  
+    )
 }

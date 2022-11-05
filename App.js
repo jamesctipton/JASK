@@ -11,6 +11,7 @@ import {
   Button,
 } from "@react-native-material/core";
 import { AntDesign } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 import { Home } from './pages/Home';
 import { TripHome } from './pages/TripHome';
 import { History } from './pages/History';
@@ -18,7 +19,7 @@ import { Friends } from './pages/Friends';
 
 
 export default function App() {
-  const [screen, setScreen] = useState(<Home state={screen} handleChange={setScreen} />);
+  const [screen, setScreen] = useState(<TripHome state={screen} handleChange={setScreen} />);
 
   return (
     <View style={{flex: 1}}>
@@ -31,7 +32,7 @@ export default function App() {
           <HStack spacing={10}>
             <IconButton icon={<AntDesign name="database" size={34} color="black" />} onPress={() => setScreen(<History />)} />
             <IconButton icon={<AntDesign name="team" size={38} color="black" />} onPress={() => setScreen(<Friends />)}/>  
-            <IconButton icon={<AntDesign name="user" size={38} color="black" />} onPress={() => setScreen(<Home />)} /> 
+            <IconButton icon={<Octicons name="home" size={38} color="black" />} onPress={() => setScreen(<Home state={screen} handleChange={setScreen} />)} /> 
           </HStack> 
           }
         style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 90, justifyContent: "center", paddingLeft: 20, paddingRight: 20, paddingBottom: 20 }}>
