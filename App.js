@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   StyleSheet, 
   View,
+  Text,
 } from 'react-native';
 import { 
   Button,
@@ -9,12 +10,37 @@ import {
   IconButton,
 } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-
-
-
+import * as Location from 'expo-location';
 
 export default function App() {
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
   return (
+    <View>
+      <Text style={styles.paragraph}>{text}</Text>
       <AppBar 
         variant='bottom'
         color='#4caf50'
@@ -29,7 +55,8 @@ export default function App() {
           />
         )}
         style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 75, justifyContent: "center" }}>
-      </AppBar>  
+      </AppBar> 
+    </View>
   );
 }
 
