@@ -5,7 +5,6 @@ import GlobeLogo from "../assets/GlobeLogo";
 import { Animated } from "react-native";
 import { Easing } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
-import axios from 'axios'
 
 const dropdownStyle = {
     width: '80%',
@@ -16,12 +15,12 @@ const dropdownStyle = {
     borderRadius: 8,
     borderColor: '#444',
 }
-const url = "http://10.7.69.193:8888/car"
+
+const url = "http://10.7.69.231:8888/car"
 
 export const Home = ({ state, handleChange }) => {
 
     const animation = new Animated.Value(0);
-
     const rotation = animation.interpolate({
         inputRange: [0, 1],
         outputRange: ['0deg', '360deg']
@@ -42,7 +41,10 @@ export const Home = ({ state, handleChange }) => {
     })
 
     const handleSubmit = () => {
-        return fetch(url)
+        return fetch(url, {
+            method: 'POST',
+            body: {'test': 'test'}
+        })
         .then((response) => response.json())
         .then((json) => {
             console.log(json)
