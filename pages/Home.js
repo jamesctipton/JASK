@@ -1,13 +1,13 @@
 import React from "react";
 import { Text, Stack, TextInput, Button } from "@react-native-material/core";
 import SelectDropdown from 'react-native-select-dropdown'
-import Logo from "../assets/Logo";
+import GlobeLogo from "../assets/GlobeLogo";
 
 
 export const Home = ({ state, handleChange }) => {
     return (
         <Stack style={{ alignItems: 'center', marginTop: -75}} spacing={20} >
-            <Logo />
+            <GlobeLogo />
             <Text variant="h4" style={{ marginTop: 30 }}>Welcome to E-Mission!</Text>
             <Text variant="h7">Please enter your cars make, model, and year</Text>
             <SelectDropdown 
