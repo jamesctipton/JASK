@@ -7,6 +7,8 @@ import json
 make = ""
 model = ""
 year = ""
+df_cars = pd.DataFrame()
+df_model = pd.DataFrame()
 
 class CarMakeHandler(SessionMixin, RequestHandler):
     def get(self):
@@ -21,31 +23,30 @@ class CarModelHandler(SessionMixin, RequestHandler):
         make = data['make']
         print(make)
 
-        models_array = get_models(make)
+        models_array, df_cars = get_models(make)
         print(models_array)
         self.write(json.dumps(models_array))
         
 
-class CarTypeHandler(SessionMixin, RequestHandler):
-    def get(self):
-        self.write({
-            'resultStatus': 'SUCCESS',
-            'message': "hit car type handler"
-        })
+class CarYearHandler(SessionMixin, RequestHandler):
+    async def post(self):
+        data = json.loads(self.request.body)
+        model = data['model']
+
+        years_array, df_model = get_years(model, df_cars)
+        self.write(json.dumps(years_array))
+            
+
+class CarFullHandler(SessionMixin, RequestHandler):
     async def post(self):
         with self.make_session() as session:
-            make = self.get_argument("make")
-            model = self.get_argument("model")
-            fueltype = self.get_argument("fueltype")
-            mpg = self.get_argument("mpg")
+            data = json.loads(self.request.body)
+            year = data['year']
+            mpg, fueltype = get_mpg_fueltype(int(year), df_model)
 
-            car = Car(make = make, model = model, fueltype = fueltype, mpg = mpg)
+            car = Car(make = make, model = model, year = year, fueltype = fueltype, mpg = mpg)
             await as_future(session.add(car))
             await as_future(session.commit())
-            self.write({
-                'resultStatus': 'SUCCESS',
-                'message': "Car DB object created"
-            })
 
 class TripHandler(SessionMixin, RequestHandler):
     def get(self):

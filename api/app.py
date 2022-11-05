@@ -5,7 +5,7 @@ nest_asyncio.apply()
 from tornado.web import Application
 import tornado.ioloop
 from tornado_sqlalchemy import SQLAlchemy
-from handlers import CarTypeHandler, TripHandler, CarMakeHandler, CarModelHandler
+from handlers import CarFullHandler, TripHandler, CarMakeHandler, CarModelHandler
 
 database_url = 'mysql+pymysql://jask:Emissions123!@jaskdb.mysql.database.azure.com/jask'
 
@@ -13,6 +13,8 @@ def make_app():
     return Application([
         (r"/car/make", CarMakeHandler),
         (r"/car/model", CarModelHandler),
+        (r"/car/year", CarMakeHandler),
+        (r"/car/full", CarFullHandler),
         (r"/trip", TripHandler)
     ], db=SQLAlchemy(database_url))
 
