@@ -8,8 +8,8 @@ makes_array = []
 #df_model = pd.DataFrame
 
 def get_makes():
-    f=open('car_makes.txt', 'r')
-    makes_array = f.read()
+    with open('car_makes.txt') as f:
+        makes_array = [make.rstrip() for make in f]
     f.close()
     return makes_array
 
@@ -18,7 +18,8 @@ def get_models(make):
     response = requests.get(api_url, headers={'X-Api-Key': API_KEY})
     if response.status_code == requests.codes.ok:
         df_cars = pd.read_json(response.text)
-        return df_cars
+        df_models = df_cars['model']
+        return df_models
     else:
         print("Error:", response.status_code, response.text)
 
@@ -32,8 +33,8 @@ def get_mpg(year, df_model):
     df = df_model.loc[df_cars['year'] == year]
     #print(df)
     mpg = df['combination_mpg'].iloc[0]
-    print(mpg)
-    #return mpg
+    #print(mpg)
+    return mpg
 
 
 df_cars = get_models('Toyota')
