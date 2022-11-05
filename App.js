@@ -34,7 +34,7 @@ export default function App() {
             <IconButton icon={<AntDesign name="user" size={38} color="black" />} onPress={() => setScreen(<Home />)} /> 
           </HStack> 
           }
-        style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 85, justifyContent: "center", paddingLeft: 20, paddingRight: 20 }}>
+        style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 90, justifyContent: "center", paddingLeft: 20, paddingRight: 20, paddingBottom: 20 }}>
       </AppBar>
       <View style={styles.container}>
         {screen}
