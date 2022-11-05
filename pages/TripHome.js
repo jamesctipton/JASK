@@ -90,8 +90,8 @@ export const TripHome = () => {
             initialRegion={{
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
-            latitudeDelta: 0.0522,
-            longitudeDelta: 0.0321,
+            latitudeDelta: 0.0042,
+            longitudeDelta: 0.0041,
             }}>
                 <Marker
                 coordinate={{ latitude : location.coords.latitude , longitude : location.coords.longitude }}
