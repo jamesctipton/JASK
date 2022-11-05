@@ -13,6 +13,8 @@ export const TripHome = () => {
 
     let locationSubscription = null;
 
+    let locations = new Array();
+
     useEffect(() => {
         (async () => {
         let { status } = await Location.requestForegroundPermissionsAsync();
@@ -27,7 +29,7 @@ export const TripHome = () => {
 
     setInterval(() => {
         getLocation();
-    }, 300000);
+    }, 300000); // makes sure to update location every 5 minutes
 
     let text;
 
@@ -39,9 +41,10 @@ export const TripHome = () => {
         locationSubscription = await Location.watchPositionAsync(
             {accuracy: Location.Accuracy.BestForNavigation,
             timeInterval: 100},
-            // (loc) => {setLocation(loc)}
-            (loc) => {setLocation(loc)}
-            );
+            (loc) => {
+                setLocation(loc);
+                locations.push(loc);
+            });
         })();
     }
 
@@ -50,6 +53,7 @@ export const TripHome = () => {
           // text = 'Waiting...';
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
+          locations.push(location);
         })();
     }
 
@@ -86,7 +90,7 @@ export const TripHome = () => {
             // <Text>{text}</Text>
             
         }
-        <Button onPress={getLocation()} title="Refresh location" /> 
+        {/* <Button onPress={getLocation()} title="Refresh location" />  */}
         </Flex>
     )
 }
