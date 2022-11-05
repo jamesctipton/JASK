@@ -37,7 +37,7 @@ export default function App() {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-  }
+  } 
 
   return (
     <View style={{flex: 1}}>
