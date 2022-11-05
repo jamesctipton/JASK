@@ -21,6 +21,8 @@ def get_models(make):
     map(str, models_array)
     return models_array
 
+models_array = get_models("Cadillac")
+print(models_array)
 """ models_array, df_cars = get_models('Toyota')
 print(df_cars)
  """

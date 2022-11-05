@@ -8,7 +8,6 @@ make = ""
 model = ""
 year = ""
 
-
 class CarMakeHandler(SessionMixin, RequestHandler):
     def get(self):
         makes_array = get_makes()
@@ -22,7 +21,13 @@ class CarModelHandler(SessionMixin, RequestHandler):
         make = data['make']
         print(make)
 
-        models_array = get_models(make)
+        df_cars = pd.read_csv('vehicles.csv', low_memory=False)
+        df_cars = df_cars[['comb08', 'fuelType1', 'make', 'model', 'year']]
+        df_cars = df_cars.loc[df_cars['make'] == str(make)]
+        models_array = df_cars['model'].to_list()
+        models_array = list(set(models_array))
+        map(str, models_array)
+        #models_array = get_models(make)
         print(models_array)
         self.write(json.dumps(models_array))
         
