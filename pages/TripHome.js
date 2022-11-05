@@ -38,8 +38,8 @@ export const TripHome = () => {
         //     longitude: loc.coords.longitude
         // });
         locations.push(loc);
-        console.log(locations);
-        console.log(locations.length);
+        //console.log(locations);
+        //console.log(locations.length);
         setUpdate(!update);
     }
 

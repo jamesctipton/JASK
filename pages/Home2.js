@@ -43,12 +43,13 @@ export const Home2 = ({ state, handleChange }) => {
     const getData = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('@make')
-            return jsonValue != null ? jsonValue : null;
+            console.log("json",jsonValue)
+            return jsonValue;
         } catch(e) {
             console.log(e)
         }
     }
-    const make_value = getData()
+    console.log('test', getData())
    
     fetch(url + '/model', {
         method: 'POST',
@@ -57,7 +58,7 @@ export const Home2 = ({ state, handleChange }) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            make: make_value
+            make: getData()
         })
     }).then((response) => 
         response.json()).then((json) => {

@@ -51,7 +51,7 @@ export const Home = ({ state, handleChange }) => {
     });
 
     const setMake = async (car_make) => {
-        console.log(car_make)
+        console.log("homejs",car_make)
         try {
             const jsonValue = JSON.stringify(car_make)
             await AsyncStorage.setItem('@make', jsonValue)
