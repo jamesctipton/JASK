@@ -10,7 +10,7 @@ def get_makes():
     return makes_array
 
 def create_df_cars():
-    return pd.read_csv('vehicles.csv')
+    return pd.read_csv('vehicles.csv', low_memory=True)
 
 def get_models(make):
     df_cars = create_df_cars()
