@@ -4,25 +4,8 @@ import SelectDropdown from 'react-native-select-dropdown'
 import GlobeLogo from "../assets/GlobeLogo";
 import { Animated } from "react-native";
 import { Easing } from "react-native";
-
-export const Home = ({ state, handleChange }) => {
-
-    const animation = new Animated.Value(0);
-
-    const rotation = animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '360deg']
-      });
-
-    Animated.loop(
-        Animated.timing(animation, {
-            toValue: 1,
-            duration: 20000,
-            easing: Easing.linear,
-            useNativeDriver: true })
-    ).start();
-
 import { AntDesign } from '@expo/vector-icons';
+
 
 const dropdownStyle = {
     
