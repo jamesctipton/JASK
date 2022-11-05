@@ -16,7 +16,7 @@ const dropdownStyle = {
     borderRadius: 8,
     borderColor: '#444',
 }
-const url = "http://localhost:8888/car"
+const url = "http://10.7.69.193:8888/car"
 
 export const Home = ({ state, handleChange }) => {
 
@@ -41,14 +41,6 @@ export const Home = ({ state, handleChange }) => {
         year: 0,
     })
 
-    /* const handleSubmit = (event) => {
-        event.preventDefault()
-        axios.get(url).then((response) => {
-          console.log(response)
-        }).catch((error) => {
-          console.log(error)
-        })
-    }; */
     const handleSubmit = () => {
         return fetch(url)
         .then((response) => response.json())
