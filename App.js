@@ -44,17 +44,9 @@ export default function App() {
       <AppBar 
         variant='bottom'
         color='#4caf50'
-        title='E-Mission'
-        leading={props => (
-          <IconButton icon={props => <Icon name="menu" {...props} />} {...props} />
-        )}
-        trailing={props => (
-          <IconButton
-            icon={props => <Icon name="magnify" {...props} />}
-            {...props}
-          />
-        )}
-        style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 75, justifyContent: "center" }}>
+        leading={ <IconButton icon={<Icon name="menu" size={34} />} /> }
+        trailing={ <IconButton icon={props => <Icon name="magnify" size={34} />} /> }
+        style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 75, justifyContent: "center", padding: 15 }}>
       </AppBar>
       <View style={styles.container}>
         <Text style={styles.paragraph}>{text}</Text>
