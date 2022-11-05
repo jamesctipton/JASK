@@ -1,75 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   StyleSheet, 
   View,
   Text,
 } from 'react-native';
 import { 
-  Button,
   AppBar,
   IconButton,
-  Spacer,
+  HStack,
+  Button,
 } from "@react-native-material/core";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import * as Location from 'expo-location';
+import { AntDesign } from '@expo/vector-icons';
+import { TripHome } from './pages/TripHome';
+import { History } from './pages/History';
+import { Friends } from './pages/Friends';
+import { Profile } from './pages/Profile';
+
 
 export default function App() {
-
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-
-  useEffect(() => {
-    getLocation();
-  }, []);
-
-  let text;
-
-  const getLocation = () => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-      // text = 'Waiting...';
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
-  }
-
-  text = 'Waiting...';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  } 
+  const [screen, setScreen] = useState(<TripHome />);
 
   return (
     <View style={{flex: 1}}>
       <AppBar 
         variant='bottom'
         color='#4caf50'
-        leading={ <IconButton icon={<Icon name="menu" size={34} />} /> }
-        trailing={ <IconButton icon={props => <Icon name="magnify" size={34} />} /> }
-        style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 75, justifyContent: "center", padding: 15 }}>
+        leading={ 
+          <Button title="Start Trip" variant='outlined' color='white' trailing={<IconButton icon={<AntDesign name="car" size={30} color="white" />} />} onPress={() => setScreen(<TripHome />)}/> }
+        trailing={
+          <HStack spacing={10}>
+            <IconButton icon={<AntDesign name="database" size={34} color="black" />} onPress={() => setScreen(<History />)} />
+            <IconButton icon={<AntDesign name="team" size={38} color="black" />} onPress={() => setScreen(<Friends />)}/>  
+            <IconButton icon={<AntDesign name="user" size={38} color="black" />} onPress={() => setScreen(<Profile />)} /> 
+          </HStack> 
+          }
+        style={{ position: "absolute", start: 0, end: 0, bottom: 0, height: 85, justifyContent: "center", paddingLeft: 20, paddingRight: 20 }}>
       </AppBar>
       <View style={styles.container}>
-        <Button 
-          title="Refresh"
-          onPress={getLocation()} // refreshes every
-          // onPress={() => getLocation()} // only on click
-        />
-        <Text style={styles.paragraph}>{text}</Text>
+        {screen}
       </View>
-    </View>
-  );
+
+    </View> 
+  )
 }
 
 
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#d3ffb9',
+    backgroundColor: '#F0EAD6',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
