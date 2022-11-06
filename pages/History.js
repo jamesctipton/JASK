@@ -8,7 +8,7 @@ const data = [
     {id: '4', date: '11/3/2022', gas: 3, CO2: '6kg'},
     {id: '5', date: '11/2/2022', gas: 2, CO2: '2kg'}
 ]
-console.log(data)
+//console.log(data)
 
 export const History = () => {
     return (
