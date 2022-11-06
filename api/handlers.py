@@ -50,11 +50,19 @@ class CarFullHandler(SessionMixin, RequestHandler):
             or fueltype == "Midgrade Gasoline" or fueltype == "Natural Gas"):
             fueltype = "Gasoline"
         
-        car = Car(make = make, model = model, year = year, fueltype = fueltype, mpg = mpg)
-        await as_future(self.session.add(car))
-        await as_future(self.session.commit())
+        car = {
+            make: make,
+            model: model,
+            year: year,
+            fueltype: fueltype,
+            mpg: mpg
+        }
+
+        #await as_future(self.session.add(car))
+        #await as_future(self.session.commit())
+        #Car(make = make, model = model, year = year, fueltype = fueltype, mpg = mpg)
         
-        self.write(json.dumps(id = car.id, make = make, model = model, year = year, fueltype = fueltype, mpg = mpg))
+        self.write(json.dumps(car))
 
 class TripHandler(SessionMixin, RequestHandler):
     def get(self):

@@ -75,8 +75,14 @@ export const Home3 = ({ state, handleChange }) => {
                 model: modelValue.replace(/['"]+/g, '')
             })
         }).then((response) => 
-            response.json()).then((json) => {
-                console.log(json)
+            response.json()).then(async (json) => {
+                //console.log(json)
+                try {
+                    const jsonValue = JSON.stringify(json)
+                    await AsyncStorage.setItem('@car', jsonValue)
+                } catch (e) {
+                    console.log(e)
+                }
             })
             .catch((e) => {
                 console.log(e)

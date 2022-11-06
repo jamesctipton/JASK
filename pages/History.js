@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, SafeAreaView, View } from "react-native";
 import { DataTable } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const data = [
     {id: '1', date: '11/2/2022', gas: 5, CO2: 5},
@@ -14,10 +16,19 @@ const data = [
 export const History = () => {
     const [page, setPage] = useState(0);
     const [pageItems, setPageItems] = useState(7);
+    const [carValue, setCar] = useState({})
 
     useEffect(() => {
-        setPage(0)
-    }, [pageItems])
+        const firstLoad = async () => {
+            try {
+                const savedCar = await AsyncStorage.getItem("@car")
+                setCar(savedCar)
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        firstLoad();
+    }, []);
 
     return (
         <SafeAreaView style={styles.container}>
