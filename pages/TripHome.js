@@ -148,32 +148,7 @@ export const TripHome = () => {
     let text;
 
     const [trips, setTrips] = useState([])
-    const stopTrip = async () => {
-        var temp = {
-            time: (stopTime - startTime) / 1000,
-            mpg: getMpg(hist, mpg),
-            emissions: getCarbonEm(gal, fuelType)
-        }
-        try {
-            const savedTrips = await AsyncStorage.getItem("@trips")
-            console.log('SAVED TRIPS', savedTrips)
-            if(savedTrips == null)
-            {
-                const jsonValue = JSON.stringify(temp)
-                await AsyncStorage.setItem('@trips', [jsonValue])
-            } else {
-                trips.push(temp);
-                setTrips(savedTrips)
-                console.log('trips array', trips)
-
-                const jsonValue = JSON.stringify(trips)
-                await AsyncStorage.setItem('@trips', jsonValue)
-            }
-        } catch (e) {
-            console.log(e)
-        }
-        
-
+    const stopTrip = () => {
 
         if(locationSubscription) {
             toggleTrip(!tripGoing);
