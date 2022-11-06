@@ -124,7 +124,15 @@ export const TripHome = () => {
             return;
           }
           try {
-            mpg = await AsyncStorage.getItem("@car");
+            let temp = await AsyncStorage.getItem("@car");
+            mpg = temp.mpg;
+            if(temp.fueltype == 'Gasoline') {
+                fuelType = 1;
+            } else if (temp.fueltype == 'Diesel') {
+                fuelType = 2;
+            } else {
+                fuelType = 0;
+            }
             
           } catch (e) {
             mpg = 24.2; // overall average
@@ -156,11 +164,11 @@ export const TripHome = () => {
         }
         try {
             const savedTrips = await AsyncStorage.getItem("@trips")
-            console.log('SAVED TRIPS', savedTrips)
+            // console.log('SAVED TRIPS', savedTrips)
             if(savedTrips == null)
             {
                 const jsonValue = JSON.stringify(temp)
-                await AsyncStorage.setItem('@trips', [jsonValue])
+                await AsyncStorage.setItem('@trips', jsonValue)
             } else {
                 trips.push(temp);
                 setTrips(savedTrips)
@@ -363,7 +371,7 @@ export const TripHome = () => {
                             }}
                         />
                     </View>     
-                    <Text>{mpg}</Text>
+                    {/* <Text>{mpg}</Text> */}
                 </Flex>
                 }
                 </Flex>
