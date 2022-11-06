@@ -1,29 +1,50 @@
-import React from "react";
-import { View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Dimensions, StyleSheet, SafeAreaView, View } from "react-native";
+import { DataTable } from 'react-native-paper';
 
 const data = [
-    {id: '1', date: '11/2/2022', gas: 5, CO2: '5kg'},
-    {id: '2', date: '11/1/2022', gas: 4, CO2: '3kg'},
-    {id: '3', date: '11/3/2022', gas: 10, CO2: '2kg'},
-    {id: '4', date: '11/3/2022', gas: 3, CO2: '6kg'},
-    {id: '5', date: '11/2/2022', gas: 2, CO2: '2kg'}
+    {id: '1', date: '11/2/2022', gas: 5, CO2: 5},
+    {id: '2', date: '11/1/2022', gas: 4, CO2: 3},
+    {id: '3', date: '11/3/2022', gas: 10, CO2: 2},
+    {id: '4', date: '11/3/2022', gas: 3, CO2: 6},
+    {id: '5', date: '11/2/2022', gas: 2, CO2: 1}
 ]
 //console.log(data)
 
 export const History = () => {
+    const [page, setPage] = useState(0);
+    const [pageItems, setPageItems] = useState(7);
+
+    useEffect(() => {
+        setPage(0)
+    }, [pageItems])
+
     return (
-        <View style={{ flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' }}>
-            {/*<DataTable
-                data={data}
-                colNames={['id', 'date', 'gas', 'co2']}
-                colSettings={[
-                    {name: 'id', type: COL_TYPES.INT, width: '10%'},
-                    {name: 'date', type: COL_TYPES.STRING, width: '30%'},
-                    {name: 'gas', type: COL_TYPES.INT, width: '15%'},
-                    {name: 'co2', type: COL_TYPES.STRING, width: '40%' }
-                ]}
-            />*/}
-            
-        </View>
+        <SafeAreaView style={styles.container}>
+            <DataTable style={{ opacity: 100, borderWidth: 2, borderRadius: 4 }}>
+                <DataTable.Header>
+                    <DataTable.Title>ID</DataTable.Title>
+                    <DataTable.Title>Date</DataTable.Title>
+                    <DataTable.Title numeric>Gas Used</DataTable.Title>
+                    <DataTable.Title numeric>CO2 Emitted</DataTable.Title>
+                </DataTable.Header>
+            </DataTable>
+            {data.map((item, idx) => (
+                <DataTable.Row key={idx} style={{ opacity: 100, borderRadius: 4, width: '100%'}}>
+                    <DataTable.Cell>{item.id}</DataTable.Cell>
+                    <DataTable.Cell>{item.date}</DataTable.Cell>
+                    <DataTable.Cell numeric>{item.gas}</DataTable.Cell>
+                    <DataTable.Cell numeric>{item.CO2}</DataTable.Cell>
+                </DataTable.Row>
+            ))}
+        </SafeAreaView>
     )
 }
+const styles = StyleSheet.create({
+    container: {
+      backgroundColor: '#d3ffb9',
+      flex: 1,
+      width: (Dimensions.get('window').width),
+      alignItems: 'center',
+    }
+});
