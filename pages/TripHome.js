@@ -71,7 +71,7 @@ const getMpg = (hist, mpg) => {
 }
 
 const getGallons = (mpg, distance) => {
-    return (mpg * distance);
+    return (distance / mpg);
 }
 
 const getCarbonEm = (gal, fuelType) => {
@@ -79,11 +79,11 @@ const getCarbonEm = (gal, fuelType) => {
     let diesCoef = 10180; //10180 grams of CO_2 per gallon diesel
     if(fuelType == 1) //Gasoline
     {
-        return (gal * gasCoef)
+        return (gal * gasCoef) / 1000;
     }
     else if (fuelType == 2) //Diesel
     {
-        return (gal * diesCoef)
+        return (gal * diesCoef) / 1000;
     }
     return -1; //error
 }
@@ -102,6 +102,21 @@ const getCost = (gal, fuelType) => {
     }
     return -1; //error
 }
+
+let mpg = 25
+let inputData = [12.1,15.6,20.9,5.3,16.1,37.6,24.8,15.1,41.7,16.1,12.2,3,1,9, 8,3,3,3,6,7,2,9,9.6, 22.1, 32,4.9,37,8.3,12];
+let distance = 5
+let fuelType = 1
+let time = 360
+
+let mphData = toMph(inputData);
+let hist = getHist(mphData);
+let avgMph = avgSpeed(mphData);
+let dist = getDistance(avgMph, time);
+let avgMpg = getMpg(hist, mpg);
+let gal = getGallons(avgMpg, dist);
+let emissions = getCarbonEm(gal, fuelType);
+let cost = getCost(gal, fuelType);
 
 
 export const TripHome = () => {
@@ -233,7 +248,44 @@ export const TripHome = () => {
                 {(tripGoing) ?
                 <Button style={styles.buttons} color="#4caf50" onPress={() => {stopTrip()}} title="End trip" titleStyle={{fontSize: 36}} />
                 :
-                <Text>{text}</Text>
+                <Flex style={{marginBottom: 200}}>
+                    <Text>Average Speed: {avgMph.toFixed(2)} mph</Text>
+                    <Text>Distance Traveled: {dist.toFixed(2)} mi</Text>
+                    <Text>Trip MPG: {avgMpg.toFixed(2)} mpg</Text>
+                    <Text>Fuel Used: {gal.toFixed(2)} gal</Text>
+                    <Text>Emissions: {emissions.toFixed(2)} kg CO2</Text>
+                    <Text>Cost: ${cost.toFixed(2)} </Text>
+                    <Text> </Text>
+                    <Text>Frequency at Speed (Mph) </Text>
+                    <LineChart
+                        data={{
+                            labels: ['10', '20',  '30', '40', '50', '60', '70', '80', '90', '100'],
+                            datasets: [
+                            {
+                                data: getHist(inputData),
+                            },
+                            ],
+                        }}
+                        width={Dimensions.get('window').width - 16}
+                        height={220}
+                        withDots = {false}
+                        fromZero = {true}
+                        withHorizontalLabels = {false}
+                        xAxisSuffix={'Speed'}
+                        chartConfig={{
+                            backgroundGradientFrom: '#adcba1',
+                            backgroundGradientTo: '#adcba1',
+                            decimalPlaces: 2,
+                            color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
+                            style: {borderRadius: 16},
+                            
+                        }}
+                        bezier style={{
+                            marginVertical: 8,
+                            borderRadius: 16,
+                        }}
+                    />     
+                </Flex>
                 }
                 
                 </ScrollView>
