@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, Stack, TextInput, Button, StyleSheet } from "@react-native-material/core";
 import SelectDropdown from 'react-native-select-dropdown'
 import GlobeLogo from "../assets/GlobeLogo";
+import Car from "../assets/Car";
 import { Animated } from "react-native";
 import { Easing } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
@@ -65,6 +66,9 @@ export const Home = ({ state, handleChange }) => {
         <Stack style={{ alignItems: 'center', marginTop: -75}} spacing={20} >
             <Animated.View style={{transform: [{rotate: rotation}] }} >
                 <GlobeLogo />
+            </Animated.View>
+            <Animated.View>
+                <Car/>
             </Animated.View>
             <Text variant="h4" style={{ marginTop: 30 }}>Welcome to E-Mission!</Text>
             <Text variant="h7">Please enter your cars make, model, and year</Text>
