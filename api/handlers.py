@@ -56,20 +56,17 @@ class CarFullHandler(SessionMixin, RequestHandler):
         
 
 class TripHandler(SessionMixin, RequestHandler):
-    def get(self):
-        self.write({
-            'resultStatus': 'SUCCESS',
-            'message': "hit trip handler"
-        })
     async def post(self):
         data = json.loads(self.request.body)
-        tripname = data["tripname"]
-        distance = data["distance"] 
-        gasUsed = data["gasUsed"]# gallons
-        emissions = data["emissions"] # tons 
-        gasCost = data["gasCost"] # in dollars
+        trip_name = data["trip_name"]
+        distance = data["distance"] # miles
+        fuel_used = data["fuel_used"]# gallons
+        emissions = data["emissions"] # kg 
+        fuel_cost = data["fuel_cost"] # in dollars
+        trip_mpg = data["trip_mpg"]
+        avg_speed = data["avg_speed"]# mph
 
-        trip = Trip(tripname = tripname, distance = distance, gasUsed = gasUsed,
-                    emissions = emissions, gasCost = gasCost)
+        trip = Trip(trip_name = trip_name, distance = distance, fuel_used = fuel_used,
+                    emissions = emissions, fuel_cost = fuel_cost, trip_mpg = trip_mpg, avg_speed = avg_speed)
         await as_future(self.session.add(trip))
         await as_future(self.session.commit())
