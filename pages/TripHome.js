@@ -6,7 +6,6 @@ import * as Location from 'expo-location';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BarChart, LineChart } from "react-native-chart-kit";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 let locationSubscription = null;
