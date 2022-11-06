@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Flex, Text, View } from "@react-native-material/core";
-import { Friends } from "./Friends";
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+
 
 export const History = () => {
     return (
         <Flex>
-            <Text>History</Text>  
+              
         </Flex>
     )
 }
