@@ -54,8 +54,11 @@ class CarFullHandler(SessionMixin, RequestHandler):
         await as_future(self.session.add(car))
         await as_future(self.session.commit())
         
+        self.write(json.dumps(id = car.id, make = make, model = model, year = year, fueltype = fueltype, mpg = mpg))
 
 class TripHandler(SessionMixin, RequestHandler):
+    def get(self):
+        return 
     async def post(self):
         data = json.loads(self.request.body)
         trip_name = data["trip_name"]
@@ -70,3 +73,6 @@ class TripHandler(SessionMixin, RequestHandler):
                     emissions = emissions, fuel_cost = fuel_cost, trip_mpg = trip_mpg, avg_speed = avg_speed)
         await as_future(self.session.add(trip))
         await as_future(self.session.commit())
+
+        self.write(json.dumps(id = trip.id, trip_name = trip_name, distance = distance, fuel_used = fuel_used,
+                    emissions = emissions, fuel_cost = fuel_cost, trip_mpg = trip_mpg, avg_speed = avg_speed))
