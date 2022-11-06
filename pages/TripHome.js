@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
+import { BarChart, LineChart } from "react-native-chart-kit";
+
 
 let locationSubscription = null;
 let locations = new Array();

@@ -3,7 +3,6 @@ from tornado_sqlalchemy import SessionMixin, as_future
 from models import Car, Trip
 from car_api import *
 import json
-from models import db
 
 make = ""
 model = ""
@@ -47,6 +46,10 @@ class CarFullHandler(SessionMixin, RequestHandler):
         print(year, make, model)
         mpg, fueltype = get_mpg_fueltype(int(year), model)
 
+        if (fueltype == "Premium Gasoline" or fueltype == "Regular Gasoline" 
+            or fueltype == "Midgrade Gasoline" or fueltype == "Natural Gas"):
+            fueltype = "Gasoline"
+        
         car = Car(make = make, model = model, year = year, fueltype = fueltype, mpg = mpg)
         await as_future(self.session.add(car))
         await as_future(self.session.commit())
