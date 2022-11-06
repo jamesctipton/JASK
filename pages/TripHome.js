@@ -77,7 +77,7 @@ export const TripHome = () => {
         // text = JSON.stringify(location);
         text = "";
         for (let index = 0; index < locations.length; index++) {
-            text += locations[index].coords.speed;
+            text += locations[index].coords.speed + " ";
         }
     }
 
