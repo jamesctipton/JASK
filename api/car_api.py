@@ -1,8 +1,5 @@
 import pandas as pd
 
-df_cars = pd.DataFrame()
-df_model = pd.DataFrame()
-
 def get_makes():
     with open('car_makes.txt') as f:
         makes_array = [make.rstrip() for make in f]
@@ -39,6 +36,7 @@ def get_mpg_fueltype(year, model):
     mpg = df_unique_year['comb08'].iloc[0]
     return float(mpg), str(fueltype)
 
-
-
-
+df_cars = pd.read_csv('vehicles.csv', low_memory=False)
+df_cars = df_cars[['comb08', 'fuelType1', 'make', 'model', 'year']]
+df_cars = df_cars.groupby('fuelType1').mean()
+print(df_cars)
