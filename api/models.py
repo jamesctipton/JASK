@@ -24,3 +24,4 @@ class Trip(db.Model):
     avgSpeed = Column(Numeric(precision=10, scale=2))
 
 db.create_all()
+

@@ -21,14 +21,6 @@ def get_models(make):
     map(str, models_array)
     return models_array
 
-#models_array = get_models("Cadillac")
-#print(models_array)
-""" models_array, df_cars = get_models('Toyota')
-print(df_cars)
- """
-#models_array, df_cars = get_models('Toyota')
-#print(models_array)
-
 def get_years(model):
     df_cars = create_df_cars()
     df_model = df_cars.loc[df_cars['model'] == model]
@@ -36,9 +28,6 @@ def get_years(model):
     years_array = list(set(years_array))
     map(str, years_array)
     return years_array
-
-""" years_array, df_model = get_years('4Runner 4WD', df_cars)
-print(years_array)  """
 
 def get_mpg_fueltype(year, model):
     df_cars = create_df_cars()
@@ -50,8 +39,6 @@ def get_mpg_fueltype(year, model):
     mpg = df_unique_year['comb08'].iloc[0]
     return float(mpg), str(fueltype)
 
-""" mpg, fueltype = get_mpg_fueltype(1993, df_model)
-print(mpg)
-print(fueltype)  """
+
 
 
