@@ -199,7 +199,7 @@ export const TripHome = () => {
                 <ScrollView contentContainerStyle={styles.container} style={styles.scrollView}>
                     {
                     (location == null) ?
-                    <Button color="#4caf50" onPress={() => {startTrip()}} title="start trip" />
+                    <Button style={styles.buttons} color="#4caf50" onPress={() => {startTrip()}} title="start trip" titleStyle={{fontSize: 36}} />
                         :
                     <MapView
                     style={styles.map} 
@@ -231,7 +231,7 @@ export const TripHome = () => {
                 }
                 {/* <Button onPress={getLocation()} title="Refresh location" />  */}
                 {(tripGoing) ?
-                <Button color="#4caf50" onPress={() => {stopTrip()}} title="End trip" />
+                <Button style={styles.buttons} color="#4caf50" onPress={() => {stopTrip()}} title="End trip" titleStyle={{fontSize: 36}} />
                 :
                 <Text>{text}</Text>
                 }
@@ -259,5 +259,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     width: (Dimensions.get('window').width)
   },
+  buttons: {
+    marginVertical: 10,
+    padding: 14,
+    // width: '50%',
+  }
 });
 
