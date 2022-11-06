@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Animated } from "react-native";
 import { Easing } from "react-native";
 import { Home3 } from "./Home3";
+import { ip } from "../constants";
 
 
 
@@ -19,7 +20,7 @@ const dropdownStyle = {
     borderRadius: 8,
     borderColor: '#444',
 }
-const url = "http://10.7.69.231:8888/car"
+const url = "http://" + ip + ":8888/car"
 
 export const Home2 = ({ state, handleChange }) => {
 

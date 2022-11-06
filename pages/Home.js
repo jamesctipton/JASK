@@ -8,6 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Home2 } from "./Home2";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Home3 } from "./Home3";
+import { ip } from "../constants";
 
 
 const dropdownStyle = {
@@ -19,7 +20,7 @@ const dropdownStyle = {
     borderRadius: 8,
     borderColor: '#444',
 }
-const url = "http://10.7.69.231:8888/car"
+const url = "http://"+ ip + ':8888/car'
 
 export const Home = ({ state, handleChange }) => {
 
