@@ -92,7 +92,7 @@ export const TripHome = () => {
         <Flex>
             {
             (location == null) ?
-            <Button onPress={() => {startTrip()}} title="start trip" />
+            <Button color="#4caf50" onPress={() => {startTrip()}} title="start trip" />
                 :
             <MapView
             style={styles.map} 
@@ -119,7 +119,7 @@ export const TripHome = () => {
         }
         {/* <Button onPress={getLocation()} title="Refresh location" />  */}
         {(tripGoing) ?
-        <Button onPress={() => {stopTrip()}} title="End trip" />
+        <Button color="#4caf50" onPress={() => {stopTrip()}} title="End trip" />
         :
         <Text>{text}</Text>
         }
