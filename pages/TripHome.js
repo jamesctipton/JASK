@@ -277,6 +277,7 @@ export const TripHome = () => {
                     <Text> </Text>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', width: '90%'}}>
                         <View style={{flex: 1, marginLeft: 20}}>
+                            <Text style={styles.categories}>Elapsed Time:</Text>
                             <Text style={styles.categories}>Average Speed:</Text>
                             <Text style={styles.categories}>Distance Traveled:</Text>
                             <Text style={styles.categories}>Trip MPG:</Text>
@@ -285,6 +286,7 @@ export const TripHome = () => {
                             <Text style={styles.categories}>Cost:</Text>
                         </View>
                         <View style={{flex: 1}}>
+                            <Text style={styles.results}>{time} seconds</Text>
                             <Text style={styles.results}>{avgMph.toFixed(2)} mph</Text>
                             <Text style={styles.results}>{dist.toFixed(2)} mi</Text>
                             <Text style={styles.results}>{avgMpg.toFixed(2)} mpg</Text>
@@ -368,7 +370,7 @@ const styles = StyleSheet.create({
   results: {
     textAlign: 'right',
     fontSize: 20,
-    marginBottom: 6
+    marginBottom: 4
   },
   title: {
     color: '#005005',
