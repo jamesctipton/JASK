@@ -23,9 +23,12 @@ export const TripHome = () => {
             return;
           }
         })();
+    }, []);
+
+    const startTrip = () => {
         getLocation();
         setLocationListener();
-    }, []);
+    }
 
     // setInterval(() => {
     //     getLocation();
@@ -89,7 +92,7 @@ export const TripHome = () => {
         <Flex>
             {
             (location == null) ?
-            <Text>{text}</Text>
+            <Button onPress={() => {startTrip()}} title="start trip" />
                 :
             <MapView
             style={styles.map} 
