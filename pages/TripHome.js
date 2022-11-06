@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import * as Location from 'expo-location';
 import MapView, { Marker, Polyline } from 'react-native-maps';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BarChart, LineChart } from "react-native-chart-kit";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -147,7 +148,34 @@ export const TripHome = () => {
     // 1667719013
     let text;
 
-    const stopTrip = () => {
+    const [trips, setTrips] = useState([])
+    const stopTrip = async () => {
+        var temp = {
+            time: (stopTime - startTime) / 1000,
+            mpg: getMpg(hist, mpg),
+            emissions: getCarbonEm(gal, fuelType)
+        }
+        try {
+            const savedTrips = await AsyncStorage.getItem("@trips")
+            console.log('SAVED TRIPS', savedTrips)
+            if(savedTrips == null)
+            {
+                const jsonValue = JSON.stringify(temp)
+                await AsyncStorage.setItem('@trips', [jsonValue])
+            } else {
+                trips.push(temp);
+                setTrips(savedTrips)
+                console.log('trips array', trips)
+
+                const jsonValue = JSON.stringify(trips)
+                await AsyncStorage.setItem('@trips', jsonValue)
+            }
+        } catch (e) {
+            console.log(e)
+        }
+        
+
+
         if(locationSubscription) {
             toggleTrip(!tripGoing);
             locationSubscription.remove();

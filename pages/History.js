@@ -4,25 +4,16 @@ import { DataTable } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const data = [
-    {id: '1', date: '11/2/2022', gas: 5, CO2: 5},
-    {id: '2', date: '11/1/2022', gas: 4, CO2: 3},
-    {id: '3', date: '11/3/2022', gas: 10, CO2: 2},
-    {id: '4', date: '11/3/2022', gas: 3, CO2: 6},
-    {id: '5', date: '11/2/2022', gas: 2, CO2: 1}
-]
-//console.log(data)
-
 export const History = () => {
     const [page, setPage] = useState(0);
     const [pageItems, setPageItems] = useState(7);
-    const [carValue, setCar] = useState({})
+    const [tripsValue, setTrip] = useState([])
 
     useEffect(() => {
         const firstLoad = async () => {
             try {
-                const savedCar = await AsyncStorage.getItem("@car")
-                setCar(savedCar)
+                const savedTrips = await AsyncStorage.getItem("@trips")
+                setTrip(savedTrips)
             } catch (err) {
                 console.log(err);
             }
@@ -30,22 +21,24 @@ export const History = () => {
         firstLoad();
     }, []);
 
+    console.log('history',tripsValue)
+
     return (
         <SafeAreaView style={styles.container}>
             <DataTable style={{ opacity: 100, borderWidth: 2, borderRadius: 4 }}>
                 <DataTable.Header>
                     <DataTable.Title>ID</DataTable.Title>
-                    <DataTable.Title>Date</DataTable.Title>
-                    <DataTable.Title numeric>Gas Used</DataTable.Title>
+                    <DataTable.Title numeric>Trip Length</DataTable.Title>
+                    <DataTable.Title numeric>Avg MPG</DataTable.Title>
                     <DataTable.Title numeric>CO2 Emitted</DataTable.Title>
                 </DataTable.Header>
             </DataTable>
-            {data.map((item, idx) => (
-                <DataTable.Row key={idx} style={{ opacity: 100, borderRadius: 4, width: '100%'}}>
-                    <DataTable.Cell>{item.id}</DataTable.Cell>
-                    <DataTable.Cell>{item.date}</DataTable.Cell>
-                    <DataTable.Cell numeric>{item.gas}</DataTable.Cell>
-                    <DataTable.Cell numeric>{item.CO2}</DataTable.Cell>
+            {[tripsValue].map((item, idx) => (
+                <DataTable.Row key={idx} style={{ opacity: 100, borderRadius: 4, width: '100%' }}>
+                    <DataTable.Cell>{idx}</DataTable.Cell>
+                    <DataTable.Cell numeric>{item.time}</DataTable.Cell>
+                    <DataTable.Cell numeric>{item.mpg}</DataTable.Cell>
+                    <DataTable.Cell numeric>{item.emissions}</DataTable.Cell>
                 </DataTable.Row>
             ))}
         </SafeAreaView>

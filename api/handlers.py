@@ -51,11 +51,11 @@ class CarFullHandler(SessionMixin, RequestHandler):
             fueltype = "Gasoline"
         
         car = {
-            make: make,
-            model: model,
-            year: year,
-            fueltype: fueltype,
-            mpg: mpg
+            'make': make,
+            'model': model,
+            'year': year,
+            'fueltype': fueltype,
+            'mpg': mpg
         }
 
         #await as_future(self.session.add(car))
