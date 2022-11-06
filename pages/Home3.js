@@ -35,13 +35,18 @@ export const Home3 = ({ state, handleChange }) => {
     ).start();
 
     let year_data = new Array()
+    var year = ""
     const [modelValue, setModel] = useState("")
+    const [makeValue, setMake] = useState("")
 
     useEffect(() => {
         const firstLoad = async () => {
             try {
-                const savedModel = await AsyncStorage.getItem("@model");
-                setModel(savedModel);
+                const savedModel = await AsyncStorage.getItem("@model")
+                setModel(savedModel)
+
+                const savedMake = await AsyncStorage.getItem("@make")
+                setMake(savedMake)
             } catch (err) {
                 console.log(err);
             }
@@ -49,7 +54,7 @@ export const Home3 = ({ state, handleChange }) => {
         firstLoad();
     }, []);
 
-    const setYear = async (car_year) => {
+    const submitCar = async (car_year) => {
         try {
             const jsonValue = JSON.stringify(car_year)
             await AsyncStorage.setItem('@year', jsonValue)
@@ -64,7 +69,9 @@ export const Home3 = ({ state, handleChange }) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                year: car_year
+                year: car_year,
+                make: makeValue.replace(/['"]+/g, ''),
+                model: modelValue.replace(/['"]+/g, '')
             })
         }).then((response) => 
             response.json()).then((json) => {
@@ -73,11 +80,12 @@ export const Home3 = ({ state, handleChange }) => {
             .catch((e) => {
                 console.log(e)
             })
+        handleChange(<TripHome state={state} handleChange={handleChange} />)
     }
 
     if(modelValue.length != 0)
     {
-        console.log("Got model", modelValue)
+        //console.log("Got model", modelValue)
         fetch(url + '/year', {
             method: 'POST',
             headers: {
@@ -92,11 +100,12 @@ export const Home3 = ({ state, handleChange }) => {
                 for(let index = 0; index < json.length; index++) {
                     year_data.push(json[index])
                 }
-                console.log(year_data)
+                //console.log(year_data)
             })
             .catch((e) => {
                 console.log(e)
             })
+        
     }
 
     return (
@@ -116,13 +125,13 @@ export const Home3 = ({ state, handleChange }) => {
                 dropdownIconPosition={"right"}
                 buttonTextStyle={{ marginLeft: 20 }}
                 onSelect={(selectedItem, index) => {
-                    setYear(selectedItem)
+                    year = selectedItem
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem;
                 }}
             />
-            <Button title="Next" variant="contained" color="#4caf50" width={150} onPress={() => handleChange(<TripHome state={state} handleChange={handleChange} />)} />
+            <Button title="Submit" variant="contained" color="#4caf50" width={150} onPress={() => submitCar(year)} />
         </Stack>
     )
 }
