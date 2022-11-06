@@ -63,7 +63,7 @@ export const Home3 = ({ state, handleChange }) => {
             console.log(e)
         }
 
-        fetch('http://10.7.69.231:8888/car/full', {
+        fetch(url + '/full', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*', 
