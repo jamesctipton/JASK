@@ -8,19 +8,29 @@ hit start before you start driving, and find out how much carbon you are emittin
 
 You'll be able to compare your trip emissions over different periods of time and see your environmental impact.
 
+E-Mission was developed by Team JASK: 
+
+* James Tipton (jamesctipton)
+
+* Kent Studer (KentStuder22)
+
+* Ankit Jain (akjai)
+
+* Sam Spell (dfhhhhhh1)
+
 
 ## Built with
 
 ### Frontend
-  1. React Native
+  *  React Native
 
 ### Backend
-  1. Python
-  2. Tornado API
+  *  Python
+  *  Tornado API
 
 ### Database
-  1. Azure MySQL Flexible Server
-  2. SQLAlchemy
+  *  Azure MySQL Flexible Server
+  *  SQLAlchemy
 
 
 ## Installation 
@@ -49,7 +59,6 @@ You'll be able to compare your trip emissions over different periods of time and
     `cd path/to/JASK/api; python app.py`
  
  3. Open Expo Go
- 
  
     
  
