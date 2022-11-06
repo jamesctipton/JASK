@@ -1,9 +1,11 @@
-import { Flex, Text, View, Button } from "@react-native-material/core";
+import { Flex, Text, Button } from "@react-native-material/core";
+import { View } from "react-native";
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import * as Location from 'expo-location';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { BarChart, LineChart } from "react-native-chart-kit";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 let locationSubscription = null;
@@ -238,10 +240,11 @@ export const TripHome = () => {
     return (
         <Flex>
             <SafeAreaView style={styles.container}>
-                <ScrollView contentContainerStyle={styles.container} style={styles.scrollView}>
+                <ScrollView style={styles.scrollView}>
+                    <Flex contentContainerStyle={styles.container} >
                     {
                     (location == null) ?
-                    <Button style={styles.buttons} color="#4caf50" onPress={() => {startTrip()}} title="start trip" titleStyle={{fontSize: 36}} />
+                    <Button style={[styles.buttons, {marginTop: '70%'}]} color="#4caf50" onPress={() => {startTrip()}} title="start trip" titleStyle={{fontSize: 36}} />
                         :
                     <MapView
                     style={styles.map} 
@@ -269,47 +272,65 @@ export const TripHome = () => {
                 <Button style={styles.buttons} color="#4caf50" onPress={() => {stopTrip()}} title="End trip" titleStyle={{fontSize: 36}} />
                 :
                 <Flex style={{marginBottom: 200}}>
-                    <Text style = {mystyle}>Trip Statistics</Text>
-                    <Text></Text>
-                    <Text style = {mystyle}>Average Speed: {avgMph.toFixed(2)} mph</Text>
-                    <Text style = {mystyle}>Distance Traveled: {dist.toFixed(2)} mi</Text>
-                    <Text style = {mystyle}>Trip MPG: {avgMpg.toFixed(2)} mpg</Text>
-                    <Text style = {mystyle}>Fuel Used: {gal.toFixed(2)} gal</Text>
-                    <Text style = {mystyle}>Emissions: {emissions.toFixed(2)} kg CO2</Text>
-                    <Text style = {mystyle}>Cost: ${cost.toFixed(2)} </Text>
                     <Text> </Text>
-                    <Text style = {mystyle}>Frequency at Speed (Mph) </Text>
-                    <LineChart
-                        data={{
-                            labels: ['10', '20',  '30', '40', '50', '60', '70', '80', '90', '100'],
-                            datasets: [
-                            {
-                                data: normHist(getHist(mphData)),
-                            },
-                            ],
-                        }}
-                        width={Dimensions.get('window').width - 16}
-                        height={220}
-                        withDots = {false}
-                        fromZero = {true}
-                        //xAxisSuffix={'Speed'}
-                        chartConfig={{
-                            backgroundGradientFrom: '#adcba1',
-                            backgroundGradientTo: '#adcba1',
-                            decimalPlaces: 2,
-                            color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
-                            style: {borderRadius: 16},
-                            
-                        }}
-                        bezier style={{
-                            marginVertical: 8,
-                            borderRadius: 16,
-                        }}
-                    />     
+                    <Text style={styles.title}>Trip Statistics</Text>
+                    <Text> </Text>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', width: '90%'}}>
+                        <View style={{flex: 1, marginLeft: 20}}>
+                            <Text style={styles.categories}>Average Speed:</Text>
+                            <Text style={styles.categories}>Distance Traveled:</Text>
+                            <Text style={styles.categories}>Trip MPG:</Text>
+                            <Text style={styles.categories}>Fuel Used:</Text>
+                            <Text style={styles.categories}>Emissions:</Text>
+                            <Text style={styles.categories}>Cost:</Text>
+                        </View>
+                        <View style={{flex: 1}}>
+                            <Text style={styles.results}>{avgMph.toFixed(2)} mph</Text>
+                            <Text style={styles.results}>{dist.toFixed(2)} mi</Text>
+                            <Text style={styles.results}>{avgMpg.toFixed(2)} mpg</Text>
+                            <Text style={styles.results}>{gal.toFixed(2)} gal</Text>
+                            <Text>
+                                <Text style={styles.results}>{emissions.toFixed(2)} kg CO</Text>
+                                <Text style={{fontWeight: 'bold', fontSize: 12}}>2</Text>
+                            </Text>
+                            <Text style={styles.results}>${cost.toFixed(2)}</Text>
+                            <Text></Text>
+                        </View>
+                    </View>
+                    <Text style={styles.title}>Frequency at Speed (Mph) </Text>
+                    <View style={styles.container} >
+                        <LineChart
+                            data={{
+                                labels: ['10', '20',  '30', '40', '50', '60', '70', '80', '90', '100'],
+                                datasets: [
+                                {
+                                    data: normHist(getHist(mphData)),
+                                },
+                                ],
+                            }}
+                            width={Dimensions.get('window').width - 26}
+                            height={220}
+                            withDots = {false}
+                            fromZero = {true}
+                            //xAxisSuffix={'Speed'}
+                            chartConfig={{
+                                backgroundGradientFrom: '#adcba1',
+                                backgroundGradientTo: '#adcba1',
+                                decimalPlaces: 2,
+                                color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
+                                style: {borderRadius: 16},
+                                
+                            }}
+                            bezier style={{
+                                marginVertical: 8,
+                                borderRadius: 16,
+                            }}
+                        />
+                    </View>     
                     {/* <Text>{text}</Text> */}
                 </Flex>
                 }
-                
+                </Flex>
                 </ScrollView>
             </SafeAreaView>
         </Flex>
@@ -318,30 +339,45 @@ export const TripHome = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#d3ffb9',
+    backgroundColor: '#F0EAD6',
     flex: 1,
+    flexDirection: 'column',
     width: (Dimensions.get('window').width),
     alignItems: 'center',
     justifyContent: 'center',
   },
   map: {
     width: (Dimensions.get('window').width) * 0.8,
-    height: (Dimensions.get('window').height) * 0.5
+    height: (Dimensions.get('window').height) * 0.5,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    marginTop: '20%'
   },
   scrollView: {
-    backgroundColor: '#d3ffb9',
+    backgroundColor: '#F0EAD6',
     marginHorizontal: 20,
     width: (Dimensions.get('window').width)
   },
   buttons: {
+    flex: 1,
+    alignSelf: 'center',
     marginVertical: 10,
     padding: 14,
     // width: '50%',
-  }
-});
-
-const mystyle = {
+  },
+  results: {
+    textAlign: 'right',
+    fontSize: 20,
+    marginBottom: 6
+  },
+  title: {
     color: '#005005',
     fontWeight: 'bold',
-    fontSize: 24
-}
+    fontSize: 24,
+    marginLeft: 20
+  },
+  categories: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  }
+});
