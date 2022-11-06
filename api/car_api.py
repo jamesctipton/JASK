@@ -43,8 +43,8 @@ print(years_array)  """
 def get_mpg_fueltype(year, model):
     df_cars = create_df_cars()
     df_cars = df_cars[['comb08', 'fuelType1', 'make', 'model', 'year']]
-    df_model = df_cars.loc[df_cars['model'] == 'Corolla']
-    df_unique_year = df_model.loc[df_cars['year'] == 2020]
+    df_model = df_cars.loc[df_cars['model'] == model]
+    df_unique_year = df_model.loc[df_cars['year'] == year]
     fueltype = df_model['fuelType1'].iloc[0]
     df_unique_year = df_unique_year.groupby('year').mean()
     mpg = df_unique_year['comb08'].iloc[0]

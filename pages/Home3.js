@@ -17,7 +17,7 @@ const dropdownStyle = {
     borderRadius: 8,
     borderColor: '#444',
 }
-const url = "http://10.7.69.231:8888/car"
+const url = "http://10.7.133.197:8888/car"
 
 export const Home3 = ({ state, handleChange }) => {
     const animation = new Animated.Value(0);
@@ -57,7 +57,7 @@ export const Home3 = ({ state, handleChange }) => {
             console.log(e)
         }
 
-        fetch('http://10.7.69.231:8888/car/full', {
+        fetch('http://10.7.133.197:8888/car/full', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*', 

@@ -19,7 +19,7 @@ const dropdownStyle = {
     borderRadius: 8,
     borderColor: '#444',
 }
-const url = "http://10.7.69.231:8888/car"
+const url = "http://10.7.133.197:8888/car"
 
 export const Home2 = ({ state, handleChange }) => {
 

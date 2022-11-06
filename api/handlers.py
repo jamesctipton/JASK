@@ -43,17 +43,19 @@ class CarYearHandler(SessionMixin, RequestHandler):
 
 class CarFullHandler(SessionMixin, RequestHandler):
     async def post(self):
-        with self.make_session() as session:
+        #with self.make_session() as session:
             data = json.loads(self.request.body)
             print(data)
             year = data['year']
+            make = data['make']
+            model = data['model']
             print(year)
             mpg, fueltype = get_mpg_fueltype(int(year), model)
 
             car = Car(make = make, model = model, year = year, fueltype = fueltype, mpg = mpg)
-            await as_future(db.session.add(car))
-            await as_future(db.session.commit())
-        self.write({
+            self.session.add(car)
+            self.session.commit()
+            self.write({
             'response': 'SUCCESS'
         })
 
@@ -64,7 +66,7 @@ class TripHandler(SessionMixin, RequestHandler):
             'message': "hit trip handler"
         })
     async def post(self):
-        with self.make_session() as session:
+        #with self.make_session() as session:
             data = json.loads(self.request.body)
             tripname = data["tripname"]
             distance = data["distance"] 
@@ -74,5 +76,5 @@ class TripHandler(SessionMixin, RequestHandler):
 
             trip = Trip(tripname = tripname, distance = distance, gasUsed = gasUsed,
                         emissions = emissions, gasCost = gasCost)
-            await as_future(db.session.add(trip))
-            await as_future(db.session.commit())
+            await as_future(db.add(trip))
+            await as_future(db.commit())
