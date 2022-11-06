@@ -7,6 +7,100 @@ import MapView, { Marker } from 'react-native-maps';
 let locationSubscription = null;
 let locations = new Array();
 
+const toMph = (inData) => {
+    for(let i = 0; i < inData.length; i++) {
+        inData[i] = inData[i] * 2.23694;
+    }
+    return inData;
+}
+
+const getHist = (inData) => {
+    let histogram = [0,0,0,0,0,0,0,0,0,0];
+    // getData()
+    let index = 0;
+    let value = 0;
+
+    for(let i = 0; i < inData.length; i++) {
+        value = Math.floor(inData[i])
+        if(value > 105)
+        {
+            value = 105;
+        }
+        else if (value > 5)
+        {
+            index = ((value + 4) / 10);
+            histogram[Math.floor(index - 1)] = histogram[Math.floor(index - 1)] + 1;
+        }
+        else if (value >= -1) {
+            index = ((value + 11) / 10);
+            histogram[Math.floor(index - 1)] = histogram[Math.floor(index - 1)] + 1;
+        }
+    }
+    return histogram;
+}
+
+const avgSpeed = (inData) => {
+    let total = 0; //Uses raw data and not histogram because of data loss to histogram
+    for(let i = 0; i < inData.length; i++) {
+        total += inData[i];
+    }
+    return (total / inData.length);
+}
+
+const getDistance = (mph, time) => {
+    return (mph * (time / 3600));
+}
+
+const getMpg = (hist, mpg) => {
+    //Fuel Effeciency calculated from research papers
+    let fuelEffeciency = [0.353846154, 0.575, 0.741935484, 0.901960784, 1, 1, 0.985915493, 0.933333333, 0.843373494, 0.744680851];
+    let avgMpg = 0;
+    let total = 0;
+    for(let i = 0; i < 9; i++)
+    {
+        total += hist[i]; //Get total amounts of reading
+    }
+    for(let i = 0; i < 9; i++)
+    {
+        avgMpg += (hist[i] * mpg * fuelEffeciency[i] / total);
+    }
+    return avgMpg;
+
+}
+
+const getGallons = (mpg, distance) => {
+    return (mpg * distance);
+}
+
+const getCarbonEm = (gal, fuelType) => {
+    let gasCoef = 8887; //8887 grams of CO_2 per gallon gasoline
+    let diesCoef = 10180; //10180 grams of CO_2 per gallon diesel
+    if(fuelType == 1) //Gasoline
+    {
+        return (gal * gasCoef)
+    }
+    else if (fuelType == 2) //Diesel
+    {
+        return (gal * diesCoef)
+    }
+    return -1; //error
+}
+
+
+const getCost = (gal, fuelType) => {
+    let gasCoef = 3.797;
+    let diesCoef = 5.39;
+    if(fuelType == 1) //Gasoline cost
+    {
+        return (gal * gasCoef)
+    }
+    else if (fuelType == 2) //Diesel cost
+    {
+        return (gal * diesCoef)
+    }
+    return -1; //error
+}
+
 
 export const TripHome = () => {
 
