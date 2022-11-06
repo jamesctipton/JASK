@@ -16,12 +16,13 @@ class Car(db.Model):
 class Trip(db.Model):
     __tablename__ = "trips"
     id = Column(Integer, primary_key=True, unique=True)
-    tripname = Column(String(256))
+    trip_name = Column(String(256))
     distance = Column(Numeric(precision=10, scale=2)) # miles 
-    gasUsed = Column(Numeric(precision=10, scale=2)) # gallons
-    emissions = Column(Numeric(precision=10, scale=2)) # tons 
-    gasCost = Column(Numeric(precision=10, scale=2)) # total cost of gas in dollars
-    avgSpeed = Column(Numeric(precision=10, scale=2))
+    fuel_used = Column(Numeric(precision=10, scale=2)) # gallons
+    emissions = Column(Numeric(precision=10, scale=2)) # kg 
+    fuel_cost = Column(Numeric(precision=10, scale=2)) # total cost of gas in dollars
+    avg_speed = Column(Numeric(precision=10, scale=2)) # mph
+    trip_mpg = Column(Numeric(precision=10, scale=2)) # total trip mpg
 
 db.create_all()
 
