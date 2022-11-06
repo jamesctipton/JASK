@@ -13,6 +13,7 @@ export const TripHome = () => {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [update, setUpdate] = useState(false);
+    const [tripGoing, toggleTrip] = useState(true);
 
     useEffect(() => {
         (async () => {
@@ -26,20 +27,21 @@ export const TripHome = () => {
         setLocationListener();
     }, []);
 
-    setInterval(() => {
-        getLocation();
-    }, 300000); // makes sure to update location every 5 minutes
+    // setInterval(() => {
+    //     getLocation();
+    // }, 300000); // makes sure to update location every 5 minutes
 
     let text;
 
+    const stopTrip = () => {
+        toggleTrip(!tripGoing);
+        locationSubscription.remove();
+    }
+
     const updateArray = (loc) => {
-        // locations.push({
-        //     latitude: loc.coords.latitude,
-        //     longitude: loc.coords.longitude
-        // });
         locations.push(loc);
-        //console.log(locations);
-        //console.log(locations.length);
+        // console.log(locations);
+        // console.log(locations.length);
         setUpdate(!update);
     }
 
@@ -72,7 +74,11 @@ export const TripHome = () => {
     if (errorMsg) {
         text = errorMsg;
     } else if (location) {
-        text = JSON.stringify(location);
+        // text = JSON.stringify(location);
+        text = "";
+        for (let index = 0; index < locations.length; index++) {
+            text += locations[index].coords.speed;
+        }
     }
 
     setInterval(() => {
@@ -106,9 +112,15 @@ export const TripHome = () => {
                 ))}
             </MapView>
             // <Text>{text}</Text>
-            
+             
         }
         {/* <Button onPress={getLocation()} title="Refresh location" />  */}
+        {(tripGoing) ?
+        <Button onPress={() => {stopTrip()}} title="End trip" />
+        :
+        <Text>{text}</Text>
+        }
+        
         </Flex>
     )
 }
