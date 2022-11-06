@@ -277,7 +277,8 @@ export const TripHome = () => {
     let gal = getGallons(avgMpg, dist);
     let emissions = getCarbonEm(gal, fuelType);
     let cost = getCost(gal, fuelType);
-    let editHist = normHist(hist);
+    let treeSaved = emissions / 10;
+
 
     return (
         <Flex>
@@ -325,7 +326,7 @@ export const TripHome = () => {
                             <Text style={styles.categories}>Trip MPG:</Text>
                             <Text style={styles.categories}>Fuel Used:</Text>
                             <Text style={styles.categories}>Emissions:</Text>
-                            <Text style={styles.categories}>Cost:</Text>
+                            <Text style={styles.categories}>Cost:</Text>    
                         </View>
                         <View style={{flex: 1}}>
                             <Text style={styles.results}>{time} seconds</Text>
@@ -341,6 +342,16 @@ export const TripHome = () => {
                             <Text></Text>
                         </View>
                     </View>
+                    <Text></Text>
+                    <View style={styles.container}>
+                        <Text>
+                            <Text style={[styles.categories, {color: "#4caf50"}]}>{emissions.toFixed(2)} kg CO</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 12, color: "#4caf50"}}>2</Text>
+                            <Text style={[styles.categories, {color: "#4caf50"}]}> would take {treeSaved} trees </Text>
+                        </Text>
+                        <Text style={[styles.categories, {color: "#4caf50"}]}> planted in a year to remove</Text>
+                    </View>
+                    <Text></Text>
                     <Text style={styles.title}>Frequency at Speed (Mph) </Text>
                     <View style={styles.container} >
                         <LineChart
