@@ -27,34 +27,29 @@ class CarModelHandler(SessionMixin, RequestHandler):
         models_array = df_cars['model'].to_list()
         models_array = list(set(models_array))
         map(str, models_array)
-        #models_array = get_models(make)
         self.write(json.dumps(models_array))
         
 
 class CarYearHandler(SessionMixin, RequestHandler):
     async def post(self):
         data = json.loads(self.request.body)
-        #print(data)
         model = data['model']
-        #print(model)
 
         years_array = get_years(model)
         self.write(json.dumps(years_array))
 
 class CarFullHandler(SessionMixin, RequestHandler):
     async def post(self):
-        #with self.make_session() as session:
-            data = json.loads(self.request.body)
-            #print(data)
-            year = data['year']
-            make = data['make']
-            model = data['model']
-            print(year, make, model)
-            mpg, fueltype = get_mpg_fueltype(int(year), model)
+        data = json.loads(self.request.body)
+        year = data['year']
+        make = data['make']
+        model = data['model']
+        print(year, make, model)
+        mpg, fueltype = get_mpg_fueltype(int(year), model)
 
-            car = Car(make = make, model = model, year = year, fueltype = fueltype, mpg = mpg)
-            self.session.add(car)
-            self.session.commit()
+        car = Car(make = make, model = model, year = year, fueltype = fueltype, mpg = mpg)
+        await as_future(self.session.add(car))
+        await as_future(self.session.commit())
         
 
 class TripHandler(SessionMixin, RequestHandler):
@@ -64,15 +59,14 @@ class TripHandler(SessionMixin, RequestHandler):
             'message': "hit trip handler"
         })
     async def post(self):
-        #with self.make_session() as session:
-            data = json.loads(self.request.body)
-            tripname = data["tripname"]
-            distance = data["distance"] 
-            gasUsed = data["gasUsed"]# gallons
-            emissions = data["emissions"] # tons 
-            gasCost = data["gasCost"] # in dollars
+        data = json.loads(self.request.body)
+        tripname = data["tripname"]
+        distance = data["distance"] 
+        gasUsed = data["gasUsed"]# gallons
+        emissions = data["emissions"] # tons 
+        gasCost = data["gasCost"] # in dollars
 
-            trip = Trip(tripname = tripname, distance = distance, gasUsed = gasUsed,
-                        emissions = emissions, gasCost = gasCost)
-            await as_future(db.add(trip))
-            await as_future(db.commit())
+        trip = Trip(tripname = tripname, distance = distance, gasUsed = gasUsed,
+                    emissions = emissions, gasCost = gasCost)
+        await as_future(self.session.add(trip))
+        await as_future(self.session.commit())
