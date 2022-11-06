@@ -62,3 +62,15 @@ E-Mission was developed by Team JASK:
  
     
  
+Sources Cited:
+
+Environmental Protection Agency. (2018, March). Greenhouse Gas Emissions from a Typical Passenger Vehicle. EPA. Retrieved November 6, 2022, from https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle#:~:text=Every%20gallon%20of%20gasoline%20burned%20creates%20about%208%2C887%20grams%20of%20CO2.
+
+Fuel Economy Guide 2022. www.fueleconomy.gov. (2022, October 26). Retrieved November 6, 2022, from https://www.fueleconomy.gov/feg/pdfs/guides/FEG2022.pdf 
+
+Haworth, N., & Symmons, M. (2001). Driving to reduce fuel consumption and     improve road safety. In P. Rogerson, N. Haworth, J. Catchpole, & F. Calvert (Eds.), Regain the Momentum: Road Safety Research, Policing and Education Conference Proceedings (Vol. 1, pp. 141 - 147). Monash University.
+
+Nasir, Mostofa & Kalam, M. A. & Masum, B.M. & Md. Noor, Rafidah. (2014). Reduction of Fuel Consumption and Exhaust Pollutant Using Intelligent Transport System. The Scientific World Journal. 10.1155/2014/836375. 
+
+One Tree Planted. (n.d.). How much CO2 does a tree absorb? One Tree Planted. Retrieved November 6, 2022, from https://onetreeplanted.org/blogs/stories/how-much-co2-does-tree-absorb 
+
