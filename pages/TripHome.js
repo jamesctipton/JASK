@@ -123,6 +123,13 @@ export const TripHome = () => {
             setErrorMsg('Permission to access location was denied');
             return;
           }
+          try {
+            mpg = await AsyncStorage.getItem("@car");
+            
+          } catch (e) {
+            mpg = 24.2; // overall average
+          }
+
         })();
     }, []);
 
@@ -329,7 +336,7 @@ export const TripHome = () => {
                             }}
                         />
                     </View>     
-                    {/* <Text>{text}</Text> */}
+                    <Text>{mpg}</Text>
                 </Flex>
                 }
                 </Flex>
