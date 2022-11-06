@@ -196,6 +196,19 @@ export const TripHome = () => {
         })();
     }
 
+    normHist = (hist) => {
+        let total = 0
+        for(let i = 0; i < 9; i++)
+        {
+            total += hist[i];
+        }
+        for(let i = 0; i < 9; i++)
+        {
+            hist[i] = hist[i] / total;
+        }
+        return hist;
+    }
+
     text = 'Waiting...';
     if (errorMsg) {
         text = errorMsg;
@@ -220,6 +233,7 @@ export const TripHome = () => {
     let gal = getGallons(avgMpg, dist);
     let emissions = getCarbonEm(gal, fuelType);
     let cost = getCost(gal, fuelType);
+    let editHist = normHist(hist);
 
     return (
         <Flex>
@@ -255,20 +269,22 @@ export const TripHome = () => {
                 <Button style={styles.buttons} color="#4caf50" onPress={() => {stopTrip()}} title="End trip" titleStyle={{fontSize: 36}} />
                 :
                 <Flex style={{marginBottom: 200}}>
-                    <Text>Average Speed: {avgMph.toFixed(2)} mph</Text>
-                    <Text>Distance Traveled: {dist.toFixed(2)} mi</Text>
-                    <Text>Trip MPG: {avgMpg.toFixed(2)} mpg</Text>
-                    <Text>Fuel Used: {gal.toFixed(2)} gal</Text>
-                    <Text>Emissions: {emissions.toFixed(2)} kg CO2</Text>
-                    <Text>Cost: ${cost.toFixed(2)} </Text>
+                    <Text style = {mystyle}>Trip Statistics</Text>
+                    <Text></Text>
+                    <Text style = {mystyle}>Average Speed: {avgMph.toFixed(2)} mph</Text>
+                    <Text style = {mystyle}>Distance Traveled: {dist.toFixed(2)} mi</Text>
+                    <Text style = {mystyle}>Trip MPG: {avgMpg.toFixed(2)} mpg</Text>
+                    <Text style = {mystyle}>Fuel Used: {gal.toFixed(2)} gal</Text>
+                    <Text style = {mystyle}>Emissions: {emissions.toFixed(2)} kg CO2</Text>
+                    <Text style = {mystyle}>Cost: ${cost.toFixed(2)} </Text>
                     <Text> </Text>
-                    <Text>Frequency at Speed (Mph) </Text>
+                    <Text style = {mystyle}>Frequency at Speed (Mph) </Text>
                     <LineChart
                         data={{
                             labels: ['10', '20',  '30', '40', '50', '60', '70', '80', '90', '100'],
                             datasets: [
                             {
-                                data: getHist(mphData),
+                                data: normHist(getHist(mphData)),
                             },
                             ],
                         }}
@@ -276,8 +292,7 @@ export const TripHome = () => {
                         height={220}
                         withDots = {false}
                         fromZero = {true}
-                        withHorizontalLabels = {false}
-                        xAxisSuffix={'Speed'}
+                        //xAxisSuffix={'Speed'}
                         chartConfig={{
                             backgroundGradientFrom: '#adcba1',
                             backgroundGradientTo: '#adcba1',
@@ -325,3 +340,8 @@ const styles = StyleSheet.create({
   }
 });
 
+const mystyle = {
+    color: '#005005',
+    fontWeight: 'bold',
+    fontSize: 24
+}

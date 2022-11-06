@@ -102,7 +102,6 @@ const getCost = (gal, fuelType) => {
 export const Friends = () => {
     let mpg = 25
     let inputData = [12.1,15.6,20.9,5.3,16.1,37.6,24.8,15.1,41.7,16.1,12.2,3,1,9, 8,3,3,3,6,7,2,9,9.6, 22.1, 32,4.9,37,8.3,12];
-    let distance = 5
     let fuelType = 1
     let time = 360
 
@@ -117,13 +116,13 @@ export const Friends = () => {
 
     return (
         <Flex>
-            <Text>Average Speed: {avgMph.toFixed(2)} mph</Text>
-            <Text>Distance Traveled: {dist.toFixed(2)} mi</Text>
-            <Text>Trip MPG: {avgMpg.toFixed(2)} mpg</Text>
-            <Text>Fuel Used: {gal.toFixed(2)} gal</Text>
-            <Text>Emissions: {emissions.toFixed(2)} kg CO2</Text>
-            <Text>Cost: ${cost.toFixed(2)} </Text>
-            <Text> </Text>
+            <Text style = {mystyle}>Average Speed: {avgMph.toFixed(2)} mph</Text>
+            <Text style = {mystyle}>Distance Traveled: {dist.toFixed(2)} mi</Text>
+            <Text style = {mystyle}>Trip MPG: {avgMpg.toFixed(2)} mpg</Text>
+            <Text style = {mystyle}>Fuel Used: {gal.toFixed(2)} gal</Text>
+            <Text style = {mystyle}>Emissions: {emissions.toFixed(2)} kg CO2</Text>
+            <Text style = {mystyle}>Cost: ${cost.toFixed(2)} </Text>
+            <Text style = {mystyle}> </Text>
             <Text>Frequency at Speed (Mph) </Text>
             <LineChart
                 data={{
@@ -155,4 +154,11 @@ export const Friends = () => {
             />     
         </Flex>
     )
+}
+
+
+const mystyle = {
+    color: '#adcba1',
+    fontWeight: 'bold',
+    fontSize: 24
 }
