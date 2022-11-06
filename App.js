@@ -31,7 +31,7 @@ export default function App() {
         trailing={
           <HStack spacing={10}>
             <IconButton icon={<AntDesign name="database" size={34} color="black" />} onPress={() => setScreen(<History />)} />
-            <IconButton icon={<AntDesign name="team" size={38} color="black" />} onPress={() => setScreen(<Friends />)}/>  
+            <IconButton icon={<AntDesign name="infocirlceo" size={38} color="black" />} onPress={() => setScreen(<Friends />)}/>  
             <IconButton icon={<Octicons name="home" size={38} color="black" />} onPress={() => setScreen(<Home state={screen} handleChange={setScreen} />)} /> 
           </HStack> 
           }
