@@ -13,7 +13,7 @@ let locations = new Array();
 let startTime = 0;
 let stopTime = 0;
 let fuelType = 1
-let mpg = 25;
+let mpg = 24.2;
 
 const toMph = (inData) => {
     for(let i = 0; i < inData.length; i++) {
@@ -123,20 +123,14 @@ export const TripHome = () => {
             setErrorMsg('Permission to access location was denied');
             return;
           }
-          try {
-            let temp = await AsyncStorage.getItem("@car");
-            mpg = temp.mpg;
-            if(temp.fueltype == 'Gasoline') {
-                fuelType = 1;
-            } else if (temp.fueltype == 'Diesel') {
-                fuelType = 2;
-            } else {
-                fuelType = 0;
-            }
+        //   try {
+        //     let temp = await AsyncStorage.getItem("@car");
+        //     console.log(temp)
+        //     mpg = temp.mpg;
             
-          } catch (e) {
-            mpg = 24.2; // overall average
-          }
+        //   } catch (e) {
+        //     mpg = 24.2; // overall average
+        //   }
 
         })();
     }, []);
@@ -157,37 +151,13 @@ export const TripHome = () => {
 
     const [trips, setTrips] = useState([])
     const stopTrip = async () => {
-        var temp = {
-            time: (stopTime - startTime) / 1000,
-            mpg: getMpg(hist, mpg),
-            emissions: getCarbonEm(gal, fuelType)
-        }
-        try {
-            const savedTrips = await AsyncStorage.getItem("@trips")
-            // console.log('SAVED TRIPS', savedTrips)
-            if(savedTrips == null)
-            {
-                const jsonValue = JSON.stringify(temp)
-                await AsyncStorage.setItem('@trips', jsonValue)
-            } else {
-                trips.push(temp);
-                setTrips(savedTrips)
-                console.log('trips array', trips)
-
-                const jsonValue = JSON.stringify(trips)
-                await AsyncStorage.setItem('@trips', jsonValue)
-            }
-        } catch (e) {
-            console.log(e)
-        }
-        
-
 
         if(locationSubscription) {
             toggleTrip(!tripGoing);
             locationSubscription.remove();
             stopTime = Date.now();
         } else return;
+
     }
 
     const getCoords = () => {
@@ -281,7 +251,6 @@ export const TripHome = () => {
 
 
     return (
-        <Flex>
             <SafeAreaView style={styles.container}>
                 <ScrollView style={styles.scrollView}>
                     <Flex contentContainerStyle={styles.container} >
@@ -322,7 +291,7 @@ export const TripHome = () => {
                         <View style={{flex: 1, marginLeft: 20}}>
                             <Text style={styles.categories}>Elapsed Time:</Text>
                             <Text style={styles.categories}>Average Speed:</Text>
-                            <Text style={styles.categories}>Distance Traveled:</Text>
+                            <Text style={styles.categories}>Distance:</Text>
                             <Text style={styles.categories}>Trip MPG:</Text>
                             <Text style={styles.categories}>Fuel Used:</Text>
                             <Text style={styles.categories}>Emissions:</Text>
@@ -388,7 +357,6 @@ export const TripHome = () => {
                 </Flex>
                 </ScrollView>
             </SafeAreaView>
-        </Flex>
     )
 }
 
