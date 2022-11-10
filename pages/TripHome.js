@@ -123,14 +123,13 @@ export const TripHome = () => {
             setErrorMsg('Permission to access location was denied');
             return;
           }
-        //   try {
-        //     let temp = await AsyncStorage.getItem("@car");
-        //     console.log(temp)
-        //     mpg = temp.mpg;
-            
-        //   } catch (e) {
-        //     mpg = 24.2; // overall average
-        //   }
+          try {
+            let temp = await AsyncStorage.getItem("@car");
+            temp = JSON.parse(temp);
+            mpg = temp.mpg;
+        } catch (e) {
+            mpg = 24.2; // overall average
+          }
 
         })();
     }, []);
@@ -145,8 +144,6 @@ export const TripHome = () => {
     //     getLocation();
     // }, 300000); // makes sure to update location every 5 minutes
 
-    // 1667718894496
-    // 1667719013
     let text;
 
     const [trips, setTrips] = useState([])
@@ -238,7 +235,8 @@ export const TripHome = () => {
         text = JSON.stringify(location);
     }, 100);
 
-    let time = (stopTime - startTime) / 1000;
+    let time = (stopTime - startTime) / 1000
+    let timeFormatted = (((stopTime - startTime) / 1000) / 60).toLocaleString('en-US', { minimumIntegerDigits: 2, maximumFractionDigits: 0}) + ":" + (((stopTime - startTime) / 1000) % 60).toLocaleString('en-US', {minimumIntegerDigits: 2, maximumFractionDigits: 0});
     let mphData = toMph(getSpeeds());
     let hist = getHist(mphData);
     let avgMph = avgSpeed(mphData);
@@ -248,7 +246,6 @@ export const TripHome = () => {
     let emissions = getCarbonEm(gal, fuelType);
     let cost = getCost(gal, fuelType);
     let treeSaved = emissions / 10;
-
 
     return (
             <SafeAreaView style={styles.container}>
@@ -298,7 +295,7 @@ export const TripHome = () => {
                             <Text style={styles.categories}>Cost:</Text>    
                         </View>
                         <View style={{flex: 1}}>
-                            <Text style={styles.results}>{time} seconds</Text>
+                            <Text style={styles.results}>{timeFormatted}</Text>
                             <Text style={styles.results}>{avgMph.toFixed(2)} mph</Text>
                             <Text style={styles.results}>{dist.toFixed(2)} mi</Text>
                             <Text style={styles.results}>{avgMpg.toFixed(2)} mpg</Text>
@@ -316,7 +313,7 @@ export const TripHome = () => {
                         <Text>
                             <Text style={[styles.categories, {color: "#4caf50"}]}>{emissions.toFixed(2)} kg CO</Text>
                             <Text style={{fontWeight: 'bold', fontSize: 12, color: "#4caf50"}}>2</Text>
-                            <Text style={[styles.categories, {color: "#4caf50"}]}> would take {treeSaved} trees </Text>
+                            <Text style={[styles.categories, {color: "#4caf50"}]}> would take {treeSaved.toFixed(2)} trees </Text>
                         </Text>
                         <Text style={[styles.categories, {color: "#4caf50"}]}> planted in a year to remove</Text>
                     </View>

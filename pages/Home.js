@@ -5,7 +5,6 @@ import GlobeLogo from "../assets/GlobeLogo";
 import { Animated, View } from "react-native";
 import { Easing } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
-import { Home2 } from "./Home2";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ip } from "../constants";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -184,20 +183,27 @@ export const Home = ({navigation}) => {
                 try {
                     const jsonValue = JSON.stringify(json)
                     await AsyncStorage.setItem('@car', jsonValue)
+                    navigation.navigate("Start Trip");
                 } catch (e) {
                     console.log(e)
                 }
-                navigation.navigate("Start Trip");
             })
             .catch((e) => {
                 console.log(e)
             })
     }
 
+    const resetDropDowns = () => {
+        setCarMake('')
+        setCarModel('')
+        setCarYear('')
+        make_data = model_data = year_data = [];
+    }
+
     return (
         <SafeAreaView style={{backgroundColor: '#F0EAD6'}}>
             <Stack style={{ alignItems: 'center', backgroundColor: '#F0EAD6' }} spacing={20} >
-                <Animated.View style={{transform: [{rotate: rotation}] }} >
+                <Animated.View style={{transform: [{rotate: rotation}], marginTop: '2%' }} >
                     <GlobeLogo />
                 </Animated.View>
                 <Text variant="h4" style={{ marginTop: 30 }}>Welcome to E-Mission!</Text>
@@ -248,6 +254,7 @@ export const Home = ({navigation}) => {
             />
             
             <Button title="Submit" variant="contained" color="#4caf50" width={150} onPress={() => { fetchMPG() }} />
+            <Button title="Reset" variant="contained" color="#4caf50" width={150} onPress={() => { resetDropDowns() }} />
             </Stack>
         </SafeAreaView>
     )  
