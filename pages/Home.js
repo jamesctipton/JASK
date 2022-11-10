@@ -159,8 +159,6 @@ export const Home = () => {
                 }}
                 
             /> 
-            {(model_data.length == 0) ? 
-            <View></View> :
             <SelectDropdown 
                 data={model_data}
                 // disabled={(model_data.length) == 0 ? true : false}
@@ -176,9 +174,6 @@ export const Home = () => {
                     fetchYears(car_data.make, selectedItem)
                 }}
             />
-            }
-            {(year_data.length == 0) ?
-            <View></View> :
             <SelectDropdown 
                 data={year_data}
                 buttonStyle={{ borderRadius: 15, borderWidth: 2, borderColor: '#4caf50', width: '80%', marginBottom: 20}}
@@ -193,7 +188,6 @@ export const Home = () => {
                     car_data.year = selectedItem;
                 }}
             />
-            }
             
             <Button title="Submit" variant="contained" color="#4caf50" width={150} onPress={() => { fetchMPG() }} />
             </Stack>
