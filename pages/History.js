@@ -64,7 +64,7 @@ export const History = () => {
 }
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#d3ffb9',
+      backgroundColor: '#F0EAD6',
       flex: 1,
       width: (Dimensions.get('window').width),
       alignItems: 'center',

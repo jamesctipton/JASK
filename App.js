@@ -40,6 +40,7 @@ function App() {
           }}>
         <Tab.Screen name='Home' component={Home}/>
         <Tab.Screen name='Start Trip' component={TripHome} />
+        <Tab.Screen name="Mission" component={Friends} />
         <Tab.Screen name='History' component={History} />
       </Tab.Navigator>
     </NavigationContainer>

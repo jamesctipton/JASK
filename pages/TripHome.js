@@ -280,7 +280,7 @@ export const TripHome = () => {
                 {(tripGoing) ?
                 <Button style={styles.buttons} color="#4caf50" onPress={() => {stopTrip()}} title="End trip" titleStyle={{fontSize: 36}} />
                 :
-                <Flex style={{marginBottom: 200}}>
+                <Flex style={{marginBottom: '15%',}}>
                     <Text> </Text>
                     <Text style={styles.title}>Trip Statistics</Text>
                     <Text> </Text>
@@ -371,7 +371,10 @@ const styles = StyleSheet.create({
     height: (Dimensions.get('window').height) * 0.5,
     marginRight: 'auto',
     marginLeft: 'auto',
-    marginTop: '20%'
+    marginTop: '20%',
+    borderColor: '#4caf50',
+    borderWidth: 4,
+    borderRadius: 10
   },
   scrollView: {
     backgroundColor: '#F0EAD6',
@@ -388,7 +391,7 @@ const styles = StyleSheet.create({
   results: {
     textAlign: 'right',
     fontSize: 20,
-    marginBottom: 4
+    marginBottom: 1
   },
   title: {
     color: '#005005',
