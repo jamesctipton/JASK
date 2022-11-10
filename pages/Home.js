@@ -207,7 +207,7 @@ export const Home = ({navigation}) => {
                     <GlobeLogo />
                 </Animated.View>
                 <Text variant="h4" style={{ marginTop: 30 }}>Welcome to E-Mission!</Text>
-                <Text variant="h7">Please enter your cars make, model, and year</Text>
+                <Text style={{fontSize: 18}}>Please enter your cars make, model, and year</Text>
                 <SelectDropdown 
                 data={make_data}
                 buttonStyle={{ borderRadius: 15, borderWidth: 2, borderColor: '#4caf50', width: '80%', marginBottom: 20}}
@@ -225,7 +225,7 @@ export const Home = ({navigation}) => {
             /> 
             <SelectDropdown 
                 data={model_data}
-                // disabled={(model_data.length) == 0 ? true : false}
+                disabled={(carMake === '') ? true : false}
                 buttonStyle={{ borderRadius: 15, borderWidth: 2, borderColor: '#4caf50', width: '80%', marginBottom: 20}}
                 dropdownStyle={dropdownStyle}
                 defaultButtonText={(carModel === '') ? "Model" : carModel}
@@ -240,6 +240,7 @@ export const Home = ({navigation}) => {
             />
             <SelectDropdown 
                 data={year_data}
+                disabled={(carModel === '') ? true : false}
                 buttonStyle={{ borderRadius: 15, borderWidth: 2, borderColor: '#4caf50', width: '80%', marginBottom: 20}}
                 dropdownStyle={dropdownStyle}
                 defaultButtonText={(carYear === '') ? "Year" : carYear}
